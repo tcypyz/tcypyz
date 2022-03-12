@@ -1,6 +1,6 @@
 # tcypyz
 
-##🚀Git 贡献提交规范
+## 🚀Git 贡献提交规范
 
     - `feat` 增加新功能
     - `fix` 修复问题/BUG
