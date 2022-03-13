@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class SmServerApplication {
-
+/*水电费*/
     public static void main(String[] args) {
         SpringApplication.run(SmServerApplication.class, args);
     }
