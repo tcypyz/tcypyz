@@ -1,7 +1,7 @@
 package com.example.smserver.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.smserver.model.entity.Test;
+import com.example.smserver.entity.Test;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

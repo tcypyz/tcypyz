@@ -1,4 +1,4 @@
-package com.example.smserver.model.entity;
+package com.example.smserver.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

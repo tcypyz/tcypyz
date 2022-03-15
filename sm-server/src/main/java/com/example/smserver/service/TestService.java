@@ -1,7 +1,7 @@
 package com.example.smserver.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.smserver.model.entity.Test;
+import com.example.smserver.entity.Test;
 
 /**
  * @description:
