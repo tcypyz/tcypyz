@@ -1,5 +1,6 @@
 <template>
   <nav>
+    <a-button>aaa</a-button>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
