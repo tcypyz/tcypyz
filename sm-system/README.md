@@ -1,4 +1,4 @@
-# sm-sys
+# sm-system
 
 ## Project setup
 ```
