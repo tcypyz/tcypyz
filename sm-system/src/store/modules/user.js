@@ -4,9 +4,9 @@ const state = {
   username: '',
   token: '',
   role: '',
-  id: '',
-  sex: '',
-
+  id: 0,
+  sex: 0,
+  phone: '',
 };
 const getters = {
   getToken(state) {
