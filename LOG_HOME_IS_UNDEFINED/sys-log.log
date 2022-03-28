@@ -534,3 +534,17 @@ Caused by: java.io.EOFException: Can not read response from server. Expected to 
 2022-03-28 22:31:29.132 [ http-nio-8080-exec-4 ] - [ INFO  ] [ com.example.smserver.config.jwt.JwtFilter : 82 ] - token验证：class java.lang.NullPointerException
 2022-03-28 22:32:23.293 [ SpringApplicationShutdownHook ] - [ INFO  ] [ com.zaxxer.hikari.HikariDataSource : 350 ] - HikariPool-1 - Shutdown initiated...
 2022-03-28 22:32:23.298 [ SpringApplicationShutdownHook ] - [ INFO  ] [ com.zaxxer.hikari.HikariDataSource : 352 ] - HikariPool-1 - Shutdown completed.
+2022-03-28 22:32:29.491 [ main ] - [ INFO  ] [ com.example.smserver.SmServerApplication : 55 ] - Starting SmServerApplication using Java 1.8.0_144 on DESKTOP-S10KK4P with PID 19852 (D:\myself\organizationProjcet\tcypyz\sm-server\target\classes started by maoshen5478 in D:\myself\organizationProjcet\tcypyz)
+2022-03-28 22:32:29.495 [ main ] - [ INFO  ] [ com.example.smserver.SmServerApplication : 640 ] - No active profile set, falling back to 1 default profile: "default"
+2022-03-28 22:32:34.433 [ main ] - [ INFO  ] [ org.apache.coyote.http11.Http11NioProtocol : 173 ] - Initializing ProtocolHandler ["http-nio-8080"]
+2022-03-28 22:32:34.433 [ main ] - [ INFO  ] [ org.apache.catalina.core.StandardService : 173 ] - Starting service [Tomcat]
+2022-03-28 22:32:34.433 [ main ] - [ INFO  ] [ org.apache.catalina.core.StandardEngine : 173 ] - Starting Servlet engine: [Apache Tomcat/9.0.58]
+2022-03-28 22:32:34.502 [ main ] - [ INFO  ] [ o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] : 173 ] - Initializing Spring embedded WebApplicationContext
+2022-03-28 22:32:35.021 [ main ] - [ INFO  ] [ org.apache.coyote.http11.Http11NioProtocol : 173 ] - Starting ProtocolHandler ["http-nio-8080"]
+2022-03-28 22:32:35.051 [ main ] - [ INFO  ] [ com.example.smserver.SmServerApplication : 61 ] - Started SmServerApplication in 6.118 seconds (JVM running for 8.239)
+2022-03-28 22:32:40.612 [ http-nio-8080-exec-1 ] - [ INFO  ] [ o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] : 173 ] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-03-28 22:32:40.710 [ http-nio-8080-exec-1 ] - [ INFO  ] [ com.zaxxer.hikari.HikariDataSource : 110 ] - HikariPool-1 - Starting...
+2022-03-28 22:32:48.425 [ http-nio-8080-exec-1 ] - [ INFO  ] [ com.zaxxer.hikari.HikariDataSource : 123 ] - HikariPool-1 - Start completed.
+2022-03-28 22:32:48.556 [ http-nio-8080-exec-1 ] - [ INFO  ] [ com.example.smserver.config.jwt.JwtFilter : 82 ] - token验证：class java.lang.NullPointerException
+2022-03-28 22:39:25.040 [ http-nio-8080-exec-2 ] - [ ERROR ] [ c.example.smserver.config.DefaultExceptionHandler : 63 ] - Request method 'GET' not supported
+2022-03-28 22:39:34.189 [ http-nio-8080-exec-3 ] - [ ERROR ] [ c.example.smserver.config.DefaultExceptionHandler : 49 ] - 用户不存在
