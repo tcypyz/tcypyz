@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <springProfile >
+        <property name="LOG_HOME" value="/log" />
+    </springProfile>
+    <property name="appName" value="sys-log"/>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>true</withJansi>
+        <encoder>
+            <pattern>%green(%d{yyyy-MM-dd HH:mm:ss}) | %highlight(%-5level) | %cyan([%logger:%L]) - %highlight(%msg%n)</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="appLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${appName}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${appName}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <MaxHistory>365</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [ %thread ] - [ %-5level ] [ %logger{50} : %line ] - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <logger name="com.ms.blogserver" level="debug"/>
+    <!-- Spring framework logger -->
+    <logger name="org.springframework" level="debug" additivity="false"/>
+    <root level="info">
+        <appender-ref ref="stdout" />
+        <appender-ref ref="appLogAppender" />
+    </root>
+</configuration>

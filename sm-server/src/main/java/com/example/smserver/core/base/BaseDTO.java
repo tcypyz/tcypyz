@@ -1,4 +1,4 @@
-package com.example.smserver.dto;
+package com.example.smserver.core.base;
 
 import lombok.Data;
 import lombok.ToString;

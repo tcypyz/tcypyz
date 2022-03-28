@@ -1,11 +1,18 @@
 package com.example.smserver.controller;
 
+import com.example.smserver.core.CustomException;
+import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.core.result.Result;
-import com.example.smserver.service.TestService;
+import com.example.smserver.core.result.ResultCode;
+import com.example.smserver.core.result.ResultFactory;
+import com.example.smserver.dto.LoginDTO;
+import com.example.smserver.entity.User;
+import com.example.smserver.service.SystemService;
+import com.example.smserver.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @description:
@@ -17,10 +24,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class SystemController {
 
     @Autowired
-    private TestService testService;
+    private SystemService systemService;
 
-    @PostMapping("/test")
-    public Result test() throws Exception {
-        return new Result(404, "", testService.list());
+    @RequestMapping("/filter/error")
+    public Result<String> handleError(){
+        return ResultFactory.buildResult(ResultCode.UNAUTHORIZED, LoginContexts.TOKEN_ERROR);
+    }
+    @PostMapping("/login")
+    public Result<LoginVO> login(@RequestBody LoginDTO dto, HttpServletResponse response) throws Exception {
+
+        User user = systemService.userLogin(dto.getUsername(), dto.getNo(), dto.getPhone(), dto.getPassword());
+
+        String token = systemService.createToken(response, user.getId().toString());
+        LoginVO result = LoginVO.builder().id(user.getId())
+                .username(user.getName())
+                .no(user.getNo())
+                .phone(user.getPhone())
+                .token(token).build();
+        return ResultFactory.buildSuccessResult(result);
     }
 }
