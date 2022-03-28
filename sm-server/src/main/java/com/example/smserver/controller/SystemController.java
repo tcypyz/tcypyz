@@ -33,7 +33,7 @@ public class SystemController {
     @PostMapping("/login")
     public Result<LoginVO> login(@RequestBody LoginDTO dto, HttpServletResponse response) throws Exception {
 
-        User user = systemService.userLogin(dto.getUsername(), dto.getNo(), dto.getPhone(), dto.getPassword());
+        User user = systemService.userLogin(dto.getId(), dto.getPassword());
 
         String token = systemService.createToken(response, user.getId().toString());
         LoginVO result = LoginVO.builder().id(user.getId())

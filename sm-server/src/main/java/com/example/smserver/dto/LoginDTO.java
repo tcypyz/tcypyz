@@ -11,9 +11,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class LoginDTO {
-    private String username;
-    private String no;
-    private String phone;
+    private String id;
     private String password;
     private String code;
     private String key;

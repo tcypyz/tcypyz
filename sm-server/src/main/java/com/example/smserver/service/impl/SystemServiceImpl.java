@@ -31,16 +31,16 @@ public class SystemServiceImpl implements SystemService {
     private RedisUtils redisUtils;
 
     @Override
-    public User userLogin(String username, String no, String phone, String password) throws CustomException {
+    public User userLogin(String id, String password) throws CustomException {
         User user = userService.lambdaQuery()
-                .eq(StringUtils.isNotEmpty(username), User::getName, username)
-                .eq(StringUtils.isNotEmpty(no), User::getNo, no)
-                .eq(StringUtils.isNotEmpty(phone), User::getPhone, phone)
+                .eq(StringUtils.isNotEmpty(id), User::getName, id).or()
+                .eq(User::getNo, id).or()
+                .eq(User::getPhone, id)
                 .one();
-        if (Objects.isNull(user)){
+        if (Objects.isNull(user)) {
             throw new CustomException(LoginContexts.USER_NOT_EXIST);
         }
-        if (user.getPassword().equals(EncryptUtils.encrypt(password))){
+        if (user.getPassword().equals(EncryptUtils.encrypt(password))) {
             return user;
         }
         throw new CustomException(LoginContexts.PASSWORD_IS_ERROR);
@@ -49,8 +49,8 @@ public class SystemServiceImpl implements SystemService {
     @Override
     public String createToken(HttpServletResponse response, String id) throws UnsupportedEncodingException {
         Long currentTimeMillis = System.currentTimeMillis();
-        String token= TokenUtils.sign(id,currentTimeMillis);
-        redisUtils.set(id,currentTimeMillis, TokenUtils.REFRESH_EXPIRE_TIME);
+        String token = TokenUtils.sign(id, currentTimeMillis);
+        redisUtils.set(id, currentTimeMillis, TokenUtils.REFRESH_EXPIRE_TIME);
         response.setHeader("Authorization", token);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
         return token;

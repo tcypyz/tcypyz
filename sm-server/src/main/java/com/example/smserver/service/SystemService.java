@@ -16,14 +16,12 @@ public interface SystemService {
     /**
      * 用户登录
      *
-     * @param username 用户名
-     * @param no       没有
-     * @param phone    电话
      * @param password 密码
-     * @return {@link String}
+     * @param id       id
+     * @return {@link User}
      * @throws CustomException 自定义异常
      */
-    User userLogin(String username, String no, String phone, String password) throws CustomException;
+    User userLogin(String id, String password) throws CustomException;
 
     /**
      * 创建令牌
