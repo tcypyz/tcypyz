@@ -177,7 +177,7 @@ com.example.smserver.core.CustomException: 用户不存在
 2022-03-28 22:04:59.069 [ http-nio-8080-exec-2 ] - [ WARN  ] [ com.zaxxer.hikari.pool.PoolBase : 184 ] - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1f8885fe (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
 2022-03-28 22:04:59.119 [ SpringApplicationShutdownHook ] - [ INFO  ] [ com.zaxxer.hikari.HikariDataSource : 350 ] - HikariPool-1 - Shutdown initiated...
 2022-03-28 22:04:59.132 [ http-nio-8080-exec-2 ] - [ WARN  ] [ com.zaxxer.hikari.pool.PoolBase : 184 ] - HikariPool-1 - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@47aafd3a (No operations allowed after connection closed.). Possibly consider using a shorter maxLifetime value.
-2022-03-28 22:04:59.144 [ http-nio-8080-exec-2 ] - [ ERROR ] [ c.example.smserver.config.DefaultExceptionHandler : 63 ] - nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+2022-03-28 22:04:59.144 [ http-nio-8080-exec-2 ] - [ ERROR ] [ c.example.smserver.config.DefaultExceptionHandler : 63 ] - nested exception is org.apache.ibatis.exceptions.PersistenceException:
 ### Error querying database.  Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is java.sql.SQLException: HikariPool-1 - Interrupted during connection acquisition
 ### The error may exist in com/example/smserver/mapper/UserMapper.java (best guess)
 ### The error may involve com.example.smserver.mapper.UserMapper.selectList
@@ -361,7 +361,7 @@ Caused by: java.io.EOFException: Can not read response from server. Expected to 
 	... 110 common frames omitted
 2022-03-28 22:31:27.243 [ http-nio-8080-exec-1 ] - [ INFO  ] [ com.zaxxer.hikari.HikariDataSource : 110 ] - HikariPool-1 - Starting...
 2022-03-28 22:31:27.248 [ http-nio-8080-exec-2 ] - [ WARN  ] [ org.apache.shiro.authc.AbstractAuthenticator : 216 ] - Authentication failed for token submission [com.example.smserver.config.jwt.JwtToken@2a60b415].  Possible unexpected error? (Typical or expected login exceptions should extend from AuthenticationException).
-org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException: 
+org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.exceptions.PersistenceException:
 ### Error querying database.  Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
@@ -438,7 +438,7 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
-Caused by: org.apache.ibatis.exceptions.PersistenceException: 
+Caused by: org.apache.ibatis.exceptions.PersistenceException:
 ### Error querying database.  Cause: org.springframework.jdbc.CannotGetJdbcConnectionException: Failed to obtain JDBC Connection; nested exception is com.mysql.cj.jdbc.exceptions.CommunicationsException: Communications link failure
 
 The last packet sent successfully to the server was 0 milliseconds ago. The driver has not received any packets from the server.
