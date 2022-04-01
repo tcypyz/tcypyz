@@ -13,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebInterceptor implements WebMvcConfigurer {
 
     private final String[] origin = {
-            "http://127.0.0.1:5478",
-            "http://localhost:5478",
+            "http://127.0.0.1:3250",
+            "http://localhost:3250",
     };
 
     /**

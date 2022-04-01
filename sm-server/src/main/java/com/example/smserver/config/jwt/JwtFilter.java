@@ -141,7 +141,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.setContentType("application/json; charset=utf-8");
-            httpServletResponse.sendRedirect("/filter/error");
+            httpServletResponse.sendRedirect("/sys/filter/error");
             logger.error("responseError:"+ "token verify fail");
         } catch (Exception e) {
             logger.error(e.getMessage());

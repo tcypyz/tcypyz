@@ -32,8 +32,10 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public User userLogin(String id, String password) throws CustomException {
+        if (StringUtils.isEmpty(id)) {
+            throw new CustomException(LoginContexts.USER_NOT_EXIST);
+        }
         User user = userService.lambdaQuery()
-                .eq(StringUtils.isNotEmpty(id), User::getName, id).or()
                 .eq(User::getNo, id).or()
                 .eq(User::getPhone, id)
                 .one();
@@ -54,5 +56,16 @@ public class SystemServiceImpl implements SystemService {
         response.setHeader("Authorization", token);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
         return token;
+    }
+
+    @Override
+    public void authentication(String token) {
+        if (StringUtils.isEmpty(token)){
+            throw new CustomException(LoginContexts.TOKEN_INVALID);
+        }
+        String account = TokenUtils.getAccount(token);
+        if (!redisUtils.hasKey(account)){
+            throw new CustomException(LoginContexts.TOKEN_ERROR);
+        }
     }
 }

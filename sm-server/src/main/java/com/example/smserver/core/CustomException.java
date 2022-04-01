@@ -5,7 +5,7 @@ package com.example.smserver.core;
  * @author: zhh
  * @time: 2022/3/28
  */
-public class CustomException extends Exception {
+public class CustomException extends RuntimeException {
 
     public CustomException(String msg){
         super(msg);

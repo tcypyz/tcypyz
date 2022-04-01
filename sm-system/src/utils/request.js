@@ -1,6 +1,7 @@
 import axios from 'axios';
-import router from '@/router'
+import router from '@/router';
 import store from '@/store';
+import { message } from 'ant-design-vue';
 
 const service = axios.create({
   baseURL: '/api',
@@ -13,6 +14,7 @@ service.interceptors.request.use(
     const token = store.getters.getToken;
     config.headers['Content-Type'] = 'application/json;charset=UTF-8';
     config.data = JSON.stringify(config.data);
+    // eslint-disable-next-line dot-notation
     config.headers['token'] = token;
     return config;
   },
@@ -24,10 +26,18 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     return new Promise((resolve, reject) => {
-
+      const data = response.data;
+      if (data.code !== 200) {
+        message.error(data.msg);
+        if (data.code === 401 || response.status === 401) {
+          router.replace('/login');
+        }
+        return reject(data.msg || 'error');
+      }
+      return resolve(data.data);
     });
   }, error => {
-
-  }
+    console.log(error);
+  },
 );
 export default service;

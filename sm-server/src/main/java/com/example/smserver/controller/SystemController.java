@@ -1,6 +1,6 @@
 package com.example.smserver.controller;
 
-import com.example.smserver.core.CustomException;
+import com.example.smserver.core.base.BaseController;
 import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultCode;
@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/sys")
-public class SystemController {
+public class SystemController extends BaseController {
 
     @Autowired
     private SystemService systemService;
@@ -32,9 +32,7 @@ public class SystemController {
     }
     @PostMapping("/login")
     public Result<LoginVO> login(@RequestBody LoginDTO dto, HttpServletResponse response) throws Exception {
-
         User user = systemService.userLogin(dto.getId(), dto.getPassword());
-
         String token = systemService.createToken(response, user.getId().toString());
         LoginVO result = LoginVO.builder().id(user.getId())
                 .username(user.getName())
@@ -43,4 +41,15 @@ public class SystemController {
                 .token(token).build();
         return ResultFactory.buildSuccessResult(result);
     }
+
+    @GetMapping("/authentication")
+    public Result<String> authentication(){
+        try{
+            systemService.authentication(getHeaderToken());
+            return ResultFactory.buildSuccessResult();
+        }catch (Exception e){
+            return ResultFactory.buildResult(ResultCode.UNAUTHORIZED,e.getMessage());
+        }
+    }
+
 }

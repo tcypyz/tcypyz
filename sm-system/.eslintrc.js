@@ -19,5 +19,8 @@ module.exports = {
     'semi-spacing': [0, { before: false, after: true }],
     'space-before-function-paren': [0, 'always'],
     'no-multiple-empty-lines': 0,
+    'vue/multi-word-component-names': 0,
+    'no-unused-vars': 0,
+    'no-trailing-spaces': 0,
   },
 };

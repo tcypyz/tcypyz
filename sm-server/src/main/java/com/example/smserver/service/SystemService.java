@@ -32,4 +32,5 @@ public interface SystemService {
      */
     String createToken( HttpServletResponse response, String id) throws UnsupportedEncodingException;
 
+    void authentication(String token);
 }
