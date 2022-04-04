@@ -1,4 +1,5 @@
 import { isStringEmpty } from '@/utils';
+import { setCookieToken, getCookieToken, removeCookieToken } from '@/utils/auth';
 
 const state = {
   username: '',
@@ -11,7 +12,7 @@ const state = {
 const getters = {
   getToken(state) {
     const token = state.token;
-    return isStringEmpty(token) ? sessionStorage.getItem('token') : token;
+    return isStringEmpty(token) ? getCookieToken() : token;
   },
   getUsername(state) {
     const name = state.username;
@@ -38,7 +39,7 @@ const getters = {
 const mutations = {
   setToken(state, token) {
     state.token = token;
-    sessionStorage.setItem('token', token);
+    setCookieToken(token);
   },
   setUsername(state, item) {
     state.username = item;
@@ -69,6 +70,16 @@ const actions = {
     context.commit('setSex', user.sex);
     context.commit('setPhone', user.phone);
     context.commit('setId', user.id);
+  },
+  logout(context) {
+    context.commit('setUsername', '');
+    context.commit('setRole', '');
+    context.commit('setSex', 0);
+    context.commit('setPhone', '');
+    context.commit('setId', 0);
+    context.commit('setToken', '');
+    sessionStorage.clear();
+    removeCookieToken();
   },
 };
 

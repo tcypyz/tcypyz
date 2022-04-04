@@ -3,6 +3,7 @@ import request from '@/utils/request';
 const API = {
   login: '/sys/login',
   auth: '/sys/authentication',
+  logout: '/sys/logout',
 };
 
 export function login(params) {
@@ -10,6 +11,13 @@ export function login(params) {
     url: API.login,
     method: 'POST',
     data: params,
+  });
+}
+
+export function logout() {
+  return request({
+    url: API.logout,
+    method: 'GET',
   });
 }
 

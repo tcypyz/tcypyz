@@ -1,8 +1,7 @@
-export const LoginEnum = {
-  LOGIN: 1,
-  NO_LOGIN: 0,
-};
-
+export const SexEnum = {
+  male: { no: 1, zh: '男', en: 'male'},
+  female: { no: 2, zh: '女', en: 'female'},
+}
 export default {
-  LoginEnum,
+  SexEnum,
 };

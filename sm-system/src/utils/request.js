@@ -27,17 +27,18 @@ service.interceptors.response.use(
   response => {
     return new Promise((resolve, reject) => {
       const data = response.data;
-      if (data.code !== 200) {
-        message.error(data.msg);
-        if (data.code === 401 || response.status === 401) {
-          router.replace('/login');
-        }
-        return reject(data.msg || 'error');
+      if (data.code === 200) {
+        return resolve(data.data);
       }
-      return resolve(data.data);
+      message.error(data.msg);
+      if (data.code === 401 || response.status === 401) {
+        router.replace('/login');
+      }
+      return reject(data.msg || 'error');
     });
-  }, error => {
-    console.log(error);
+  }, _error => {
+    message.error('服务器异常');
+    return Promise.reject(_error);
   },
 );
 export default service;

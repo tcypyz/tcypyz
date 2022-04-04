@@ -7,7 +7,6 @@ import com.example.smserver.service.SystemService;
 import com.example.smserver.utils.EncryptUtils;
 import com.example.smserver.utils.RedisUtils;
 import com.example.smserver.utils.TokenUtils;
-import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,5 +66,22 @@ public class SystemServiceImpl implements SystemService {
         if (!redisUtils.hasKey(account)){
             throw new CustomException(LoginContexts.TOKEN_ERROR);
         }
+    }
+
+    @Override
+    public Boolean logout(String token) {
+        if (StringUtils.isEmpty(token)){
+            throw new CustomException(LoginContexts.AUTHENTIC_FAIL);
+        }
+        String account = TokenUtils.getAccount(token);
+        Long currentTime= TokenUtils.getCurrentTime(token);
+        if (redisUtils.hasKey(account)) {
+            Long currentTimeMillisRedis = (Long) redisUtils.get(account);
+            if (currentTimeMillisRedis.equals(currentTime)) {
+                redisUtils.del(account);
+                return true;
+            }
+        }
+        throw new CustomException(LoginContexts.TOKEN_ERROR);
     }
 }

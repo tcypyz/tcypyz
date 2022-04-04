@@ -4,7 +4,7 @@ import AdminLayout from '@/layout';
 export default [
   {
     path: '/',
-    name: 'home',
+    name: 'main',
     redirect: '/login',
   },
   {

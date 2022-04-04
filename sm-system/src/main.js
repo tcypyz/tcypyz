@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import { loadPlugins } from '@/plugins';
 import 'ant-design-vue/dist/antd.css';
+import '@/router/permission';
 
 (() => {
   const app = createApp(App);
@@ -12,5 +13,3 @@ import 'ant-design-vue/dist/antd.css';
   app.use(router);
   app.mount('#app');
 })();
-
-// createApp(App).use(store).use(router).mount('#app');

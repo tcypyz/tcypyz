@@ -30,6 +30,7 @@ public class SystemController extends BaseController {
     public Result<String> handleError(){
         return ResultFactory.buildResult(ResultCode.UNAUTHORIZED, LoginContexts.TOKEN_ERROR);
     }
+
     @PostMapping("/login")
     public Result<LoginVO> login(@RequestBody LoginDTO dto, HttpServletResponse response) throws Exception {
         User user = systemService.userLogin(dto.getId(), dto.getPassword());
@@ -39,6 +40,7 @@ public class SystemController extends BaseController {
                 .no(user.getNo())
                 .phone(user.getPhone())
                 .token(token).build();
+
         return ResultFactory.buildSuccessResult(result);
     }
 
@@ -49,6 +51,16 @@ public class SystemController extends BaseController {
             return ResultFactory.buildSuccessResult();
         }catch (Exception e){
             return ResultFactory.buildResult(ResultCode.UNAUTHORIZED,e.getMessage());
+        }
+    }
+
+    @GetMapping("/logout")
+    public Result<String> logout(){
+        try {
+            systemService.logout(getHeaderToken());
+            return ResultFactory.buildSuccessResult();
+        } catch (Exception e) {
+            return ResultFactory.buildResult(ResultCode.UNAUTHORIZED, e.getMessage());
         }
     }
 

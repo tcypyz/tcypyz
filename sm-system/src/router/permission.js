@@ -5,24 +5,30 @@ import router from '@/router';
 import store from '@/store';
 import { isStringEmpty } from '@/utils';
 import { auth } from '@/api/system';
+import { getCookieToken } from '@/utils/auth';
 
-const token = store.getters.getToken;
 NProgress.configure({ showSpinner: false });
 
 router.beforeEach((to, from, next) => {
+  const token = getCookieToken();
   NProgress.start();
   if (isStringEmpty(token)) {
-    next({ path: '/login', query: { redirect: to.fullPath } });
-    message.error('请先登录！');
-    NProgress.done();
+    if (to.fullPath.includes('/login')) {
+      next();
+      NProgress.done();
+    } else {
+      message.error('请先登录！');
+      next(`/login?redirect=${to.path}`);
+      NProgress.done();
+    }
   } else {
+    // next();
     auth().then(() => {
       next();
     }).catch(() => {
       next('/login');
-    }).finally(() => {
-      NProgress.done();
     });
+    NProgress.done();
   }
 });
 
