@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
+    "@iconify/vue": "^3.2.1",
     "ant-design-vue": "^2.2.8",
     "axios": "^0.26.1",
     "core-js": "^3.8.3",
@@ -33,6 +34,6 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-vue": "^8.0.3",
     "less": "^4.0.0",
-    "less-loader": "^8.0.0"
+    "less-loader": "^5.0.0"
   }
 }

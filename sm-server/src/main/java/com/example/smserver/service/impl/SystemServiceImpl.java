@@ -24,7 +24,7 @@ import java.util.Objects;
 public class SystemServiceImpl implements SystemService {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private RedisUtils redisUtils;

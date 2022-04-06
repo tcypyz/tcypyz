@@ -4,6 +4,8 @@ const API = {
   login: '/sys/login',
   auth: '/sys/authentication',
   logout: '/sys/logout',
+  menu: '/user/menu',
+  role: '',
 };
 
 export function login(params) {
@@ -24,6 +26,20 @@ export function logout() {
 export function auth() {
   return request({
     url: API.auth,
+    method: 'GET',
+  });
+}
+
+export function getMenu() {
+  return request({
+    url: API.menu,
+    method: 'GET',
+  });
+}
+
+export function getRole() {
+  return request({
+    url: API.role,
     method: 'GET',
   });
 }

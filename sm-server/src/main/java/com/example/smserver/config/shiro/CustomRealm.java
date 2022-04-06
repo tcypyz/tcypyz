@@ -4,7 +4,7 @@ import com.example.smserver.config.jwt.JwtToken;
 import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.entity.User;
 import com.example.smserver.service.RoleService;
-import com.example.smserver.service.impl.UserService;
+import com.example.smserver.service.impl.UserServiceImpl;
 import com.example.smserver.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
@@ -32,7 +32,7 @@ import java.util.Set;
 public class CustomRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private RoleService roleService;

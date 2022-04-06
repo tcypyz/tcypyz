@@ -6,7 +6,7 @@ const state = {
   token: '',
   role: '',
   id: 0,
-  sex: 0,
+  sex: -1,
   phone: '',
 };
 const getters = {
@@ -24,11 +24,11 @@ const getters = {
   },
   getId(state) {
     const id = state.id;
-    return isStringEmpty(id) ? Number(sessionStorage.getItem('id')) : id;
+    return id === 0 ? Number(sessionStorage.getItem('id')) : id;
   },
   getSex(state) {
     const sex = state.sex;
-    return isStringEmpty(sex) ? Number(sessionStorage.getItem('sex')) : sex;
+    return sex === -1 ? Number(sessionStorage.getItem('sex')) : sex;
   },
   getPhone(state) {
     const phone = state.phone;
@@ -74,7 +74,7 @@ const actions = {
   logout(context) {
     context.commit('setUsername', '');
     context.commit('setRole', '');
-    context.commit('setSex', 0);
+    context.commit('setSex', -1);
     context.commit('setPhone', '');
     context.commit('setId', 0);
     context.commit('setToken', '');

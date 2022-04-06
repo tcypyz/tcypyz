@@ -27,16 +27,23 @@
       </template>
     </a-dropdown>
   </div>
+
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue';
+import { 
+  defineComponent, 
+  computed, 
+  createVNode, 
+} from 'vue';
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   SettingOutlined,
   LoginOutlined,
+  QuestionCircleOutlined,
 } from '@ant-design/icons-vue';
+import { Modal, message } from 'ant-design-vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { logout } from '@/api/system';
@@ -61,9 +68,20 @@ export default defineComponent({
       emit('clickCollapse');
     };
     const handleLogout = () => {
-      logout().then().finally(() => {
-        store.dispatch('logout');
-        replace('/login');
+      Modal.confirm({
+        title: '确认',
+        icon: createVNode(QuestionCircleOutlined),
+        content: '你确实要退出吗？',
+        okText: '确定',
+        cancelText: '取消',
+        okButtonProps: { type: 'primary', danger: true },
+        onOk() {
+          return logout().then().finally(() => {
+            store.dispatch('logout');
+            replace('/login');
+            message.success('成功登出');
+          });
+        },
       });
     };
     return {
@@ -91,9 +109,9 @@ export default defineComponent({
   height: 100%;
   margin-left: auto;
   margin-right: 8px;
+  color: rgba(0,0,0,.65) !important;
   .dropdown{
     padding: 0 10px;
-
   }
   .dropdown:hover{
     background: rgba(0,0,0,.025);
@@ -106,6 +124,7 @@ export default defineComponent({
   font-weight: 400;
   min-width: 120px;
   font-size: 12px;
+  color: rgba(0,0,0,.65);
   .icon{
     margin-right: 8px;
   }

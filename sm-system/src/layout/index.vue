@@ -2,9 +2,12 @@
   <a-layout has-sider class="main-layout">
     <a-layout-sider  v-model:collapsed="collapsed" collapsible :trigger="null">
       <div class="logo">
-        <h1 v-if="!collapsed">学生管理系统</h1>
+        <div>
+          <Icon icon="logos:ant-design" style="font-size: 32px; vertical-align: middle;"/>
+          <h1 :style="{display: disable}">学生管理系统</h1>
+        </div>
       </div>
-      <PermissionMenu />
+      <PermissionMenu :menu="menuList"/>
     </a-layout-sider>
     <a-layout>
       <a-layout-header :style="{ background: '#fff', padding: 0 }">
@@ -16,27 +19,32 @@
             <component :is="Component" />
           </keep-alive>
         </router-view>
-
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import { useStore } from 'vuex';
 import PermissionMenu from './components/PermissionMenu.vue';
 import Header from './components/Header.vue';
 export default defineComponent({
   name: 'AdminLayout',
   components: { PermissionMenu, Header },
   setup() {
+    const store = useStore();
+    const menuList = computed(() => store.getters.getMenu);
     const collapsed = ref(false);
     const handleClickCollapse = () => {
       collapsed.value = !collapsed.value;
     };
+    const disable = computed(() => collapsed.value ? 'inline-block' : 'inline-block');
     return {
       collapsed,
       handleClickCollapse,
+      menuList,
+      disable,
     };
   },
 });
@@ -46,12 +54,19 @@ export default defineComponent({
 .main-layout{
   min-height: 100vh;
   .logo{
-    text-align: center;
-    height: 32px;
-    margin: 16px;
+    position: relative;
+    height: 64px;
+    padding-left: 24px;
+    overflow: hidden;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    line-height: 64px;
+    background: #001529;
     h1{
+      margin: 0 0 0 12px;
       line-height: 32px;
       color: #fff;
+      vertical-align: middle;
     }
   }
 }

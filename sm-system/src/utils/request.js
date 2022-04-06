@@ -37,6 +37,7 @@ service.interceptors.response.use(
       return reject(data.msg || 'error');
     });
   }, _error => {
+    console.error(_error);
     message.error('服务器异常');
     return Promise.reject(_error);
   },
