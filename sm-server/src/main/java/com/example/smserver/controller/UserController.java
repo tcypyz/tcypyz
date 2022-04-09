@@ -6,6 +6,7 @@ import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultCode;
 import com.example.smserver.core.result.ResultFactory;
+import com.example.smserver.service.UserService;
 import com.example.smserver.service.impl.UserServiceImpl;
 import com.example.smserver.utils.TokenUtils;
 import com.example.smserver.vo.MenuVO;
@@ -27,7 +28,7 @@ import java.util.List;
 public class UserController extends BaseController {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @GetMapping("/menu")
     public Result<List<MenuVO>> menu(){

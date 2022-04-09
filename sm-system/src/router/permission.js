@@ -32,8 +32,8 @@ router.beforeEach((to, from, next) => {
       } else {
         next();
       }
-    }).catch(async() => {
-      await store.dispatch('logout');
+    }).catch(() => {
+      next('/');
     });
     NProgress.done();
   }

@@ -5,7 +5,7 @@ import { message } from 'ant-design-vue';
 
 const service = axios.create({
   baseURL: '/api',
-  timeout: 5 * 1000,
+  timeout: 15 * 1000,
 });
 
 service.interceptors.request.use(
@@ -32,6 +32,7 @@ service.interceptors.response.use(
       }
       message.error(data.msg);
       if (data.code === 401 || response.status === 401) {
+        store.dispatch('logout');
         router.replace('/login');
       }
       return reject(data.msg || 'error');

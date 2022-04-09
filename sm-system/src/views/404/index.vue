@@ -2,7 +2,7 @@
   <div>404</div>
 </template>
 <script setup name="404">
-import { computed, onMounted } from '@vue/runtime-core';
+import { computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 const { getters } = useStore();
@@ -15,7 +15,6 @@ const handleGoLogin = () => {
 };
 const fromRoute = computed(() => getters.getPath);
 const handleCurrentRoute = () => {
-  console.log(router);
   if (fromRoute.value.includes('/admin') && router.hasRoute(router.currentRoute.value.fullPath)) {
     router.replace(fromRoute.value);
   }

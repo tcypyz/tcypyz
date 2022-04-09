@@ -78,6 +78,7 @@ const actions = {
     context.commit('setPhone', '');
     context.commit('setId', 0);
     context.commit('setToken', '');
+    context.commit('setMenu', []);
     sessionStorage.clear();
     removeCookieToken();
   },

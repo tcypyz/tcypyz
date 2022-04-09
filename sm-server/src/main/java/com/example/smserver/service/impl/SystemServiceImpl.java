@@ -3,6 +3,7 @@ package com.example.smserver.service.impl;
 import com.example.smserver.core.CustomException;
 import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.entity.User;
+import com.example.smserver.mapper.UserMapper;
 import com.example.smserver.service.SystemService;
 import com.example.smserver.utils.EncryptUtils;
 import com.example.smserver.utils.RedisUtils;
@@ -34,10 +35,10 @@ public class SystemServiceImpl implements SystemService {
         if (StringUtils.isEmpty(id)) {
             throw new CustomException(LoginContexts.USER_NOT_EXIST);
         }
-        User user = userService.lambdaQuery()
-                .eq(User::getNo, id).or()
-                .eq(User::getPhone, id)
-                .one();
+        User user = userService.getBaseMapper().getByNo(Long.parseLong(id));
+        if (Objects.isNull(user)) {
+            user = userService.lambdaQuery().eq(User::getId, id).or().eq(User::getPhone, id).one();
+        }
         if (Objects.isNull(user)) {
             throw new CustomException(LoginContexts.USER_NOT_EXIST);
         }
@@ -59,22 +60,22 @@ public class SystemServiceImpl implements SystemService {
 
     @Override
     public void authentication(String token) {
-        if (StringUtils.isEmpty(token)){
+        if (StringUtils.isEmpty(token)) {
             throw new CustomException(LoginContexts.TOKEN_INVALID);
         }
         String account = TokenUtils.getAccount(token);
-        if (!redisUtils.hasKey(account)){
+        if (!redisUtils.hasKey(account)) {
             throw new CustomException(LoginContexts.TOKEN_ERROR);
         }
     }
 
     @Override
     public Boolean logout(String token) {
-        if (StringUtils.isEmpty(token)){
+        if (StringUtils.isEmpty(token)) {
             throw new CustomException(LoginContexts.AUTHENTIC_FAIL);
         }
         String account = TokenUtils.getAccount(token);
-        Long currentTime= TokenUtils.getCurrentTime(token);
+        Long currentTime = TokenUtils.getCurrentTime(token);
         if (redisUtils.hasKey(account)) {
             Long currentTimeMillisRedis = (Long) redisUtils.get(account);
             if (currentTimeMillisRedis.equals(currentTime)) {

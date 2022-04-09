@@ -15,7 +15,11 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class SmServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SmServerApplication.class, args);
+        try {
+            SpringApplication.run(SmServerApplication.class, args);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Bean
