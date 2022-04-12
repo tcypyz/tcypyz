@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.smserver.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 /**
  * @description:
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Mapper
-@Repository
 public interface UserMapper extends BaseMapper<User> {
     /**
      * id查找学生和教师

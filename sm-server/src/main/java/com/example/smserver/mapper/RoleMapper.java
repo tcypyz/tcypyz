@@ -11,6 +11,5 @@ import org.springframework.stereotype.Repository;
  * @time: 2022/3/28
  */
 @Mapper
-@Repository
 public interface RoleMapper extends BaseMapper<Role> {
 }

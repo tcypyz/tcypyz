@@ -13,6 +13,7 @@ import com.example.smserver.vo.MenuVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,5 +45,10 @@ public class UserController extends BaseController {
             e.printStackTrace();
             return ResultFactory.buildResult(ResultCode.UNAUTHORIZED, LoginContexts.TOKEN_ERROR,null);
         }
+    }
+
+    @PostMapping(value = "/add")
+    public Result<String> addUser(){
+        return ResultFactory.buildSuccessResult();
     }
 }
