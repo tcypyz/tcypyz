@@ -32,7 +32,18 @@ public interface SystemService {
      */
     String createToken( HttpServletResponse response, String id) throws UnsupportedEncodingException;
 
+    /**
+     * 验证登录
+     *
+     * @param token
+     */
     void authentication(String token);
 
+    /**
+     *  登出
+     *
+     * @param token
+     * @return
+     */
     Boolean logout(String token);
 }
