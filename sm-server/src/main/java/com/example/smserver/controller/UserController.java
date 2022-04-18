@@ -51,4 +51,5 @@ public class UserController extends BaseController {
     public Result<String> addUser(){
         return ResultFactory.buildSuccessResult();
     }
+
 }
