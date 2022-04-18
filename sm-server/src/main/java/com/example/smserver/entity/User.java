@@ -20,13 +20,13 @@ public class User implements Serializable {
     @TableId(type = IdType.ASSIGN_ID)
     private Long id;
     private String name;
-    private String no;
     private String password;
     private String phone;
     private Integer sex;
     private Long roleId;
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
+    private LocalDateTime birth;
 
     public User() {
     }

@@ -5,6 +5,7 @@ import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.entity.User;
 import com.example.smserver.mapper.UserMapper;
 import com.example.smserver.service.SystemService;
+import com.example.smserver.service.UserService;
 import com.example.smserver.utils.EncryptUtils;
 import com.example.smserver.utils.RedisUtils;
 import com.example.smserver.utils.TokenUtils;
@@ -28,6 +29,9 @@ public class SystemServiceImpl implements SystemService {
     private UserService userService;
 
     @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
     private RedisUtils redisUtils;
 
     @Override
@@ -35,7 +39,8 @@ public class SystemServiceImpl implements SystemService {
         if (StringUtils.isEmpty(id)) {
             throw new CustomException(LoginContexts.USER_NOT_EXIST);
         }
-        User user = userService.getBaseMapper().getByNo(Long.parseLong(id));
+        id = StringUtils.getDigits(id);
+        User user = userMapper.getByNo(Long.parseLong(id));
         if (Objects.isNull(user)) {
             user = userService.lambdaQuery().eq(User::getId, id).or().eq(User::getPhone, id).one();
         }

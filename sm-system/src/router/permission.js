@@ -33,6 +33,7 @@ router.beforeEach((to, from, next) => {
         next();
       }
     }).catch(() => {
+      store.dispatch('logout');
       next('/');
     });
     NProgress.done();
@@ -67,7 +68,7 @@ const assembleMenu = function (route) {
       ...item,
       component: item.component === 'layout'
         ? AdminLayout
-        : () => require('@/views/' + item.component + '/index.vue'),
+        : () => import('@/views/' + item.component + '/index.vue'),
     };
     resRouter.push(fmtRoute);
   });

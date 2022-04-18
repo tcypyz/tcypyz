@@ -2,20 +2,21 @@ package com.example.smserver.controller;
 
 import com.example.smserver.core.CustomException;
 import com.example.smserver.core.base.BaseController;
+import com.example.smserver.core.base.BaseDTO;
 import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultCode;
 import com.example.smserver.core.result.ResultFactory;
+import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.service.UserService;
 import com.example.smserver.service.impl.UserServiceImpl;
 import com.example.smserver.utils.TokenUtils;
 import com.example.smserver.vo.MenuVO;
+import com.example.smserver.vo.UserTableVO;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,8 +49,16 @@ public class UserController extends BaseController {
     }
 
     @PostMapping(value = "/add")
-    public Result<String> addUser(){
+    public Result<String> addUser(@RequestBody UserAddDTO dto){
+        userService.addUser(dto);
         return ResultFactory.buildSuccessResult();
+    }
+
+
+    @PostMapping(value = "/list")
+    public Result<PageInfo<UserTableVO>> list(@RequestBody BaseDTO dto){
+        PageInfo<UserTableVO> pageInfo = userService.getPage(dto);
+        return ResultFactory.buildSuccessResult(pageInfo);
     }
 
 }

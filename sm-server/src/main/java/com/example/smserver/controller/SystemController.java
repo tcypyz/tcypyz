@@ -37,7 +37,6 @@ public class SystemController extends BaseController {
         String token = systemService.createToken(response, user.getId().toString());
         LoginVO result = LoginVO.builder().id(user.getId())
                 .username(user.getName())
-                .no(user.getNo())
                 .phone(user.getPhone())
                 .token(token).build();
 

@@ -1,19 +1,27 @@
 package com.example.smserver.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.smserver.entity.Menu;
-import com.example.smserver.entity.RoleMenu;
-import com.example.smserver.entity.User;
+import com.example.smserver.converter.UserTableConverter;
+import com.example.smserver.core.CustomException;
+import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.core.context.DigitalContexts;
+import com.example.smserver.dto.UserAddDTO;
+import com.example.smserver.entity.*;
 import com.example.smserver.mapper.UserMapper;
-import com.example.smserver.service.MenuService;
-import com.example.smserver.service.RoleMenuService;
-import com.example.smserver.service.RoleService;
-import com.example.smserver.service.UserService;
+import com.example.smserver.service.*;
+import com.example.smserver.type.RoleEnum;
+import com.example.smserver.utils.DateUtils;
+import com.example.smserver.utils.EncryptUtils;
+import com.example.smserver.utils.PageInfoUtils;
 import com.example.smserver.vo.MenuVO;
+import com.example.smserver.vo.UserTableVO;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -35,6 +43,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private RoleMenuService roleMenuService;
+
+    @Autowired
+    private StudentService studentService;
+
+    @Autowired
+    private TeacherService teacherService;
 
     @Override
     public List<MenuVO> getMenuList(Long id) {
@@ -67,6 +81,63 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 });
             }
         });
+        return result;
+    }
+
+    @Override
+    public void addUser(UserAddDTO dto) {
+        dto.setPassword(EncryptUtils.encrypt(dto.getPassword()));
+        User user = User.builder()
+                .name(dto.getName())
+                .password(dto.getPassword())
+                .sex(dto.getSex())
+                .phone(dto.getPhone())
+                .roleId(dto.getRole())
+                .createTime(LocalDateTime.now())
+                .birth(DateUtils.toLocalDateTime(dto.getBirth()))
+                .build();
+        Integer insert = baseMapper.insert(user);
+        if (!insert.equals(DigitalContexts.ONE)){
+            throw new CustomException();
+        }
+        if (user.getRoleId().equals(RoleEnum.STUDENT.id)){
+            Student student = new Student();
+            student.setId(Long.parseLong(dto.getNo()));
+            student.setUserId(user.getId());
+            student.setCollege(dto.getCollege());
+            student.setProfession(dto.getProfession());
+            student.setInTime(LocalDateTime.now());
+            studentService.getBaseMapper().insert(student);
+        } else if (user.getRoleId().equals(RoleEnum.TEACHER.id)){
+            Teacher teacher = new Teacher();
+            teacher.setUserId(user.getId());
+            teacher.setId(Long.parseLong(dto.getNo()));
+            teacher.setCollege(dto.getCollege());
+            teacher.setInTime(LocalDateTime.now());
+            teacher.setOccupation(dto.getOccupation());
+            teacherService.getBaseMapper().insert(teacher);
+        }
+    }
+
+    @Override
+    public String getRole(Long id) {
+        return roleService.lambdaQuery().eq(Role::getId, id).one().getName();
+    }
+
+    @Override
+    public PageInfo<UserTableVO> getPage(BaseDTO dto) {
+        PageHelper.startPage(dto.getPage(), dto.getSize());
+        List<User> userList = list();
+        List<UserTableVO> resList = UserTableConverter.INSTANCE.toDataList(userList);
+        resList.forEach(item -> {
+            item.setRole(getRole(item.getRoleId()));
+            int now = LocalDateTime.now().getYear();
+            int age = now - item.getBirth().getYear();
+            item.setAge(age);
+        });
+        PageInfo<UserTableVO> result = new PageInfo<>();
+        PageInfoUtils.transform(new PageInfo<>(userList), result);
+        result.setList(resList);
         return result;
     }
 

@@ -14,11 +14,7 @@
         <Header :collapsed="collapsed" @clickCollapse="handleClickCollapse"/>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px 0' }">
-        <router-view v-slot="{ Component }">
-          <keep-alive>
-            <component :is="Component" />
-          </keep-alive>
-        </router-view>
+        <Views/>
       </a-layout-content>
     </a-layout>
   </a-layout>
@@ -29,9 +25,11 @@ import { computed, defineComponent, ref } from 'vue';
 import { useStore } from 'vuex';
 import PermissionMenu from './components/PermissionMenu.vue';
 import Header from './components/Header.vue';
+import Views from './components/Views.vue';
+
 export default defineComponent({
   name: 'AdminLayout',
-  components: { PermissionMenu, Header },
+  components: { PermissionMenu, Header, Views },
   setup() {
     const store = useStore();
     const menuList = computed(() => store.getters.getMenu);
