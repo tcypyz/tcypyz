@@ -23,5 +23,5 @@ public class Teacher implements Serializable {
     private String college;
     private String occupation;
     private LocalDateTime inTime;
-    private LocalDateTime birth;
+
 }
