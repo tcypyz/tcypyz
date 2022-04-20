@@ -25,4 +25,8 @@ export const tableProps = {
     type: Number,
     default: 1,
   },
+  pageSize: {
+    type: Number,
+    default: 10,
+  },
 };
