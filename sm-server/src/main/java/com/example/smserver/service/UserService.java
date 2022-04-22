@@ -33,7 +33,7 @@ public interface UserService extends IService<User> {
     void addUser(UserAddDTO dto);
 
     /**
-     * 得到角色
+     * 获取用户角色
      *
      * @param id id
      * @return {@link String}
@@ -41,7 +41,7 @@ public interface UserService extends IService<User> {
     String getRole(Long id);
 
     /**
-     * 获取页面
+     * 用户分页列表
      *
      * @param dto dto
      * @return {@link PageInfo}<{@link UserTableVO}>

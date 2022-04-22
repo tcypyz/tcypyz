@@ -1,10 +1,13 @@
 package com.example.smserver.type;
 
+import lombok.Getter;
+
 /**
  * @description:
  * @author: zhh
  * @time: 2022/4/16
  */
+@Getter
 public enum RoleEnum {
     /**
      * 超级管理员
@@ -19,7 +22,7 @@ public enum RoleEnum {
      */
     TEACHER(3L,"TEACHER","老师");
 
-    public long id;
+    public Long id;
     public String name;
     public String zh;
 
@@ -28,4 +31,6 @@ public enum RoleEnum {
         this.name = name;
         this.zh = zh;
     }
+
+
 }

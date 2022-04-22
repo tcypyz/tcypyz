@@ -7,6 +7,7 @@ import com.example.smserver.core.base.BaseDTO;
 import com.example.smserver.core.context.DigitalContexts;
 import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.entity.*;
+import com.example.smserver.handle.client.AccountClient;
 import com.example.smserver.mapper.UserMapper;
 import com.example.smserver.service.*;
 import com.example.smserver.type.RoleEnum;
@@ -43,6 +44,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private RoleMenuService roleMenuService;
+
+    @Autowired
+    private AccountClient<UserAddDTO> accountClient;
 
     @Autowired
     private StudentService studentService;
@@ -100,22 +104,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!insert.equals(DigitalContexts.ONE)){
             throw new CustomException();
         }
-        if (user.getRoleId().equals(RoleEnum.STUDENT.id)){
-            Student student = new Student();
-            student.setId(Long.parseLong(dto.getNo()));
-            student.setUserId(user.getId());
-            student.setCollege(dto.getCollege());
-            student.setProfession(dto.getProfession());
-            student.setInTime(LocalDateTime.now());
-            studentService.getBaseMapper().insert(student);
-        } else if (user.getRoleId().equals(RoleEnum.TEACHER.id)){
-            Teacher teacher = new Teacher();
-            teacher.setUserId(user.getId());
-            teacher.setId(Long.parseLong(dto.getNo()));
-            teacher.setCollege(dto.getCollege());
-            teacher.setInTime(LocalDateTime.now());
-            teacher.setOccupation(dto.getOccupation());
-            teacherService.getBaseMapper().insert(teacher);
+        if (!user.getRoleId().equals(RoleEnum.ADMIN.id)){
+            accountClient.doHandler(user.getRoleId().toString(), dto, user.getId());
         }
     }
 

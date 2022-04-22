@@ -70,6 +70,7 @@
       :columns="columns"
       table-title="用户表格" 
       class="user-table"
+      @reload="loadList"
     >
     </BaseTable>
   </div>
@@ -112,6 +113,7 @@ export default defineComponent({
     };
     const onClose = () => {
       visible.value = false;
+      data.form = formData;
     };
     const onSubmit = () => {
       add(data.form).then(() => {
@@ -119,17 +121,18 @@ export default defineComponent({
         message.open({ type: 'success', content: '添加成功' });
       }).catch(() => {
         message.open({ type: 'warn', content: '添加失败' });
-      }).finally(() => {
-        data.form = formData;
       });
     };
-    onMounted(() => {
+    const loadList = () => {
       userList(data.pagination).then((res) => {
         res.list = res.list.map(element => {
           return { ...element, key: element.id };
         });
         data.list = res.list;
       });
+    };
+    onMounted(() => {
+      loadList();
     });
     return {
       showDrawer,
@@ -141,6 +144,7 @@ export default defineComponent({
       SexEnum,
       RoleEnum,
       columns,
+      loadList,
     };
   },
 });

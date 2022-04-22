@@ -7,7 +7,7 @@
       <div class="table-toolbar-right">
         <a-space>
           <a-button danger :disabled="showDel">删除全部</a-button>
-          <ReloadOutlined/>
+          <ReloadOutlined @click="handleReload"/>
         </a-space>
       </div>
     </div>
