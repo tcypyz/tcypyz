@@ -7,4 +7,9 @@
             id = (select user_id from sms_student where id = #{id})
             or id = (select user_id from sms_teacher where id = #{id})
     </select>
+
+    <select id="getTeaVoByNo" resultType="com.example.smserver.entity.User">
+        select * from sms_user where
+            id = (select user_id from sms_teacher where user_id = #{id})
+    </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.example.smserver.vo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.ToString;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Data
 @ToString
 public class TeacherTableVO implements Serializable {
-    private Long id;
+    private Long userId;
     private String name;
     private Integer sex;
     private String phone;

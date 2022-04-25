@@ -10,4 +10,10 @@ class SmServerApplicationTests {
     void contextLoads() {
     }
 
+    @Test
+    void TestTeacher(){
+        
+
+    }
+
 }
