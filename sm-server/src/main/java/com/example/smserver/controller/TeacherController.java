@@ -27,5 +27,4 @@ public class TeacherController extends BaseController {
         PageInfo<TeacherTableVO> pageInfo = teacherService.getPage(dto);
         return ResultFactory.buildSuccessResult(pageInfo);
     }
-
 }

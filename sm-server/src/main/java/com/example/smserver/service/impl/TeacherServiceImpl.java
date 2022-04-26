@@ -34,14 +34,12 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
     public PageInfo<TeacherTableVO> getPage(BaseDTO dto) {
         PageHelper.startPage(dto.getPage(), dto.getSize());
         List<Teacher> teacherList = list();
+        System.out.println("teacherList:---->"+teacherList);
         List<TeacherTableVO> resList = TeacherTableConverter.INSTANCE.toDataList(teacherList);
 
         resList.forEach(item -> {
-            System.out.println("UserId:"+item.getUserId());
             Teacher teacher = teacherMapper.getTchByNo(item.getUserId());
-            System.out.println("teacher:---->"+teacher.getUserId());
             User user = userMapper.getTeaVoByNo(teacher.getUserId());
-            System.out.println("user:--->"+user);
 
             item.setName(user.getName());
             item.setPhone(user.getPhone());
