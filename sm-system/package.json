@@ -10,7 +10,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
     "@iconify/vue": "^3.2.1",
-    "ant-design-vue": "^3.0.0",
+    "ant-design-vue": "^3.2.1",
     "axios": "^0.26.1",
     "core-js": "^3.8.3",
     "js-cookie": "^3.0.1",

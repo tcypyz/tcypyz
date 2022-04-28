@@ -1,3 +1,4 @@
+
 export const tableProps = {
   columns: {
     type: Array,
@@ -29,4 +30,5 @@ export const tableProps = {
     type: Number,
     default: 10,
   },
+
 };

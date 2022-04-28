@@ -1,4 +1,5 @@
 import BaseTable from './BaseTable/index.vue';
+
 const components = [
   BaseTable,
 ];

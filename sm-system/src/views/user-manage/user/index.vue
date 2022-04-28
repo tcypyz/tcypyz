@@ -65,29 +65,82 @@
         </a-form-item>
       </a-form>
     </a-drawer>
-    <BaseTable 
-      :data="data.list" 
-      :columns="columns"
-      table-title="用户表格" 
-      class="user-table"
-      @reload="loadList"
-    >
-    </BaseTable>
+    <a-spin :spinning="spinning">
+      <BaseTable 
+        :data="data.list" 
+        :columns="columns"
+        table-title="用户表格" 
+        class="user-table"
+        @onReload="loadList"
+        @edit="handleEdit"
+        @onDelete="handleDel"
+        @deleteAll="handleDel"
+      >
+      </BaseTable>
+    </a-spin>
+  <a-modal 
+    :visible="editShow" 
+    title="修改用户" 
+    @ok="handleOk"
+    @cancel="handleCancel"
+  >
+    <a-form :model="data.editForm" :rules="rules">
+      <a-form-item name="name" label="姓名：">
+        <a-input v-model:value="data.editForm.name" placeholder="请输入姓名" />
+      </a-form-item>
+      <a-form-item name="sex" label="性别：">
+        <a-radio-group v-model:value="data.editForm.sex" button-style="solid">
+          <a-radio-button :value="SexEnum.MALE">{{
+              SexEnum.properties[SexEnum.MALE].zh
+          }}</a-radio-button>
+          <a-radio-button :value="SexEnum.FEMALE">{{
+              SexEnum.properties[SexEnum.FEMALE].zh
+          }}</a-radio-button>
+        </a-radio-group>
+      </a-form-item>
+      <a-form-item name="phone" label="手机：">
+        <a-input v-model:value="data.editForm.phone" placeholder="请输入手机号码" />
+      </a-form-item>
+      <a-form-item name="birth" label="出生日期：">
+        <a-date-picker v-model:value="data.editForm.birth" value-format="YYYY-MM-DD" />
+      </a-form-item>
+      <a-form-item name="role" label="角色：">
+        <a-select ref="select" v-model:value="data.editForm.roleId" style="width: 120px">
+          <a-select-option :value="RoleEnum.ADMIN">
+            {{ RoleEnum.properties[RoleEnum.ADMIN].zh }}
+          </a-select-option>
+          <a-select-option :value="RoleEnum.STUDENT">
+            {{ RoleEnum.properties[RoleEnum.STUDENT].zh }}
+          </a-select-option>
+          <a-select-option :value="RoleEnum.TEACHER">
+            {{ RoleEnum.properties[RoleEnum.TEACHER].zh }}
+          </a-select-option>
+        </a-select>
+      </a-form-item>
+    </a-form>
+  </a-modal>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, reactive, onMounted } from 'vue';
+import { 
+  defineComponent, 
+  ref, 
+  reactive, 
+  onMounted,
+} from 'vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue';
 import { SexEnum, RoleEnum } from '@/type/enum';
-import { add, userList } from '@/api/user';
+import { add, userList, edit, deleteUser } from '@/api/user';
 import { formData, formRules, columns } from './data';
 export default defineComponent({
   name: 'UserSetting',
   components: { PlusOutlined },
   setup() {
     const visible = ref(false);
+    const editShow = ref(false);
+    const spinning = ref(false);
     const data = reactive({
       form: {
         no: '',
@@ -100,6 +153,14 @@ export default defineComponent({
         role: 2,
         profession: '',
         occupation: '',
+      },
+      editForm: {
+        id: '',
+        name: '',
+        sex: 1,
+        phone: '',
+        birth: '',
+        roleId: 2,
       },
       list: [],
       pagination: {
@@ -119,16 +180,49 @@ export default defineComponent({
       add(data.form).then(() => {
         onClose();
         message.open({ type: 'success', content: '添加成功' });
+        loadList();
       }).catch(() => {
         message.open({ type: 'warn', content: '添加失败' });
       });
     };
+    const changeSpinning = () => {
+      spinning.value = !spinning.value;
+    };
     const loadList = () => {
+      changeSpinning();
       userList(data.pagination).then((res) => {
         res.list = res.list.map(element => {
           return { ...element, key: element.id };
         });
         data.list = res.list;
+      }).finally(() => {
+        changeSpinning();
+      });
+    };
+    const handleEdit = (row) => {
+      editShow.value = true;
+      data.editForm = { ...row };
+      console.log(data.editForm);
+    };
+    const handleCancel = () => {
+      editShow.value = false;
+    };
+    const handleDel = (param) => {
+      console.log(param);
+      deleteUser({ idList: param }).then(() => {
+        message.success('添加成功');
+        loadList();
+      }).catch(() => {
+        message.error('添加失败');
+      });
+    };
+    const handleOk = () => {
+      edit().then(() => {
+        message.success('修改成功');
+        handleCancel();
+        loadList();
+      }).catch(() => {
+        message.error('修改失败');
       });
     };
     onMounted(() => {
@@ -145,6 +239,12 @@ export default defineComponent({
       RoleEnum,
       columns,
       loadList,
+      spinning,
+      handleEdit,
+      editShow,
+      handleCancel,
+      handleOk,
+      handleDel,
     };
   },
 });

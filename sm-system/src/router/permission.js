@@ -14,29 +14,28 @@ router.beforeEach((to, from, next) => {
   const token = getCookieToken();
   const menu = store.getters.getMenu;
   NProgress.start();
-  
-  if (isStringEmpty(token)) {
-    if (to.fullPath.includes('/login')) {
-      next();
-      NProgress.done();
-    } else {
+  if (to.fullPath.includes('/login')) {
+    next();
+    NProgress.done();
+  } else {
+    if (isStringEmpty(token)) {
       message.error('请先登录！');
       next(`/login?redirect=${to.path}`);
       NProgress.done();
+    } else {
+      auth().then(() => {
+        if (isArrayEmpty(menu)) {
+          asyncRouter(router);
+          next({ ...to, replace: true });
+        } else {
+          next();
+        }
+      }).catch(() => {
+        store.dispatch('logout');
+        next('/');
+      });
+      NProgress.done();
     }
-  } else {
-    auth().then(() => {
-      if (isArrayEmpty(menu)) {
-        asyncRouter(router);
-        next({ ...to, replace: true });
-      } else {
-        next();
-      }
-    }).catch(() => {
-      store.dispatch('logout');
-      next('/');
-    });
-    NProgress.done();
   }
 });
 

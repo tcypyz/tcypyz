@@ -1,11 +1,15 @@
 package com.example.smserver.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.smserver.converter.UserEditConverter;
 import com.example.smserver.converter.UserTableConverter;
 import com.example.smserver.core.CustomException;
 import com.example.smserver.core.base.BaseDTO;
 import com.example.smserver.core.context.DigitalContexts;
+import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;
+import com.example.smserver.dto.UserEditDTO;
 import com.example.smserver.entity.*;
 import com.example.smserver.handle.client.AccountClient;
 import com.example.smserver.mapper.UserMapper;
@@ -69,14 +73,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .orderByAsc(Menu::getId)
                 .list();
         List<MenuVO> result = new ArrayList<>();
-        menuList.forEach( item -> {
+        menuList.forEach(item -> {
             if (item.getPid().equals(0L)) {
                 result.add(convert(item));
             } else {
-                result.forEach( resultItem -> {
-                    if (item.getPid().equals(resultItem.getId())){
+                result.forEach(resultItem -> {
+                    if (item.getPid().equals(resultItem.getId())) {
                         List<MenuVO> children = resultItem.getChildren();
-                        if (CollectionUtils.isEmpty(children)){
+                        if (CollectionUtils.isEmpty(children)) {
                             children = new ArrayList<>();
                         }
                         children.add(convert(item));
@@ -101,10 +105,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 .birth(DateUtils.toLocalDateTime(dto.getBirth()))
                 .build();
         Integer insert = baseMapper.insert(user);
-        if (!insert.equals(DigitalContexts.ONE)){
+        if (!insert.equals(DigitalContexts.ONE)) {
             throw new CustomException();
         }
-        if (!user.getRoleId().equals(RoleEnum.ADMIN.id)){
+        if (!user.getRoleId().equals(RoleEnum.ADMIN.id)) {
             accountClient.doHandler(user.getRoleId().toString(), dto, user.getId());
         }
     }
@@ -131,8 +135,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return result;
     }
 
+    @Override
+    public void deleteUser(IdDTO dto) {
+        removeByIds(dto.getIdList());
+        teacherService.remove(new LambdaQueryWrapper<Teacher>().in(Teacher::getUserId, dto.getIdList()));
+        studentService.remove(new LambdaQueryWrapper<Student>().in(Student::getUserId, dto.getIdList()));
+    }
 
-    private MenuVO convert (Menu from) {
+    @Override
+    public void editUser(UserEditDTO dto) {
+        User user = getById(dto.getId());
+        UserEditConverter.INSTANCE.fromDataNoNull(dto, user);
+        updateById(user);
+    }
+
+    private MenuVO convert(Menu from) {
         return MenuVO.builder()
                 .id(from.getId())
                 .name(from.getName())

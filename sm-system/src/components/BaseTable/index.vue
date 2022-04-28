@@ -1,12 +1,13 @@
 <template>
   <a-card :bordered="false">
+    {{ load }}
     <div class="table-page-wrapper">
       <div class="table-toolbar-left">
           {{ tableTitle }}
       </div>
       <div class="table-toolbar-right">
         <a-space>
-          <a-button danger :disabled="showDel">删除全部</a-button>
+          <a-button danger :disabled="showDel" @click="handleDeleteAll">删除全部</a-button>
           <ReloadOutlined @click="handleReload"/>
         </a-space>
       </div>
@@ -48,9 +49,11 @@ import { tableProps } from './props';
 import { SexEnum, RoleEnum } from '@/type/enum';
 export default defineComponent({
   name: 'BaseTable',
-  props: tableProps,
+  props: { 
+    ...tableProps,
+  },
   components: { ReloadOutlined },
-  emits: ['reload', 'onDelete', 'edit'],
+  emits: ['onReload', 'onDelete', 'edit', 'deleteAll'],
   setup(props, { emit }) {
     const state = reactive({
       selectedRowKeys: [],
@@ -58,14 +61,19 @@ export default defineComponent({
     const showDivider = computed(() => props.showDelete && props.showEdit);
     const showDel = computed(() => state.selectedRowKeys.length === 0); 
     const onSelectChange = (selectedRowKeys) => {
-      console.log('selectedRowKeys changed: ', selectedRowKeys);
       state.selectedRowKeys = selectedRowKeys;
     };
     const handleReload = () => {
-      emit('reload');
+      emit('onReload');
     };
-    const handleDelete = (r) => {
-      emit('onDelete', r);
+    const handleDelete = (row) => {
+      emit('onDelete', [row.id]);
+    };
+    const handleEdit = (r) => {
+      emit('edit', r);
+    };
+    const handleDeleteAll = () => {
+      emit('deleteAll', state.selectedRowKeys);
     };
     const selectColor = (id) => {
       switch (id) {
@@ -80,11 +88,13 @@ export default defineComponent({
       onSelectChange,
       handleReload,
       handleDelete,
+      handleEdit,
       showDivider,
       showDel,
       SexEnum,
       RoleEnum,
       selectColor,
+      handleDeleteAll,
     };
   },
 });

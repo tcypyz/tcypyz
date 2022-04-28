@@ -2,7 +2,9 @@ package com.example.smserver.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;
+import com.example.smserver.dto.UserEditDTO;
 import com.example.smserver.entity.User;
 import com.example.smserver.vo.MenuVO;
 import com.example.smserver.vo.UserTableVO;
@@ -47,4 +49,18 @@ public interface UserService extends IService<User> {
      * @return {@link PageInfo}<{@link UserTableVO}>
      */
     PageInfo<UserTableVO> getPage(BaseDTO dto);
+
+    /**
+     * 删除用户
+     *
+     * @param dto dto
+     */
+    void deleteUser(IdDTO dto);
+
+    /**
+     * 编辑用户
+     *
+     * @param dto dto
+     */
+    void editUser(UserEditDTO dto);
 }

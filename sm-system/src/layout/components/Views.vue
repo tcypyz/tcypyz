@@ -7,3 +7,16 @@
     </transition>
   </router-view>
 </template>
+
+<style>
+.fade-enter.fade-enter-active,
+.fade-appear.fade-appear-active {
+    -webkit-animation-name: none;
+    animation-name: none;
+}
+
+.fade-leave.fade-leave-active {
+    -webkit-animation-name: none;
+    animation-name: none;
+}
+</style>

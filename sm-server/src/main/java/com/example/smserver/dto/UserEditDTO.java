@@ -1,25 +1,22 @@
-package com.example.smserver.vo;
+package com.example.smserver.dto;
 
 import lombok.Data;
 import lombok.ToString;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @description:
  * @author: zhh
- * @time: 2022/4/12
+ * @time: 2022/4/28
  */
 @Data
 @ToString
-public class UserTableVO implements Serializable {
+public class UserEditDTO {
     private Long id;
     private String name;
     private String phone;
     private Integer sex;
-    private String role;
-    private Integer age;
     private LocalDateTime birth;
     private Long roleId;
 }

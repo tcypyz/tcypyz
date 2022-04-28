@@ -3,6 +3,9 @@ package com.example.smserver.dto;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * @description:
  * @author: zhh
@@ -10,5 +13,7 @@ import lombok.ToString;
  */
 @Data
 @ToString
-public class IdDTO {
+public class IdDTO implements Serializable {
+    private Long id;
+    private List<Long> idList;
 }

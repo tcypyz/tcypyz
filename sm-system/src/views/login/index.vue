@@ -46,6 +46,7 @@
         </a-button>
       </a-form-item>
     </a-form>
+    
   </div>
 </template>
 
@@ -90,6 +91,7 @@ export default defineComponent({
     const onFinishFailed = (errorInfo) => {
       console.log('Failed:', errorInfo);
     };
+
     return {
       data,
       disabled,
