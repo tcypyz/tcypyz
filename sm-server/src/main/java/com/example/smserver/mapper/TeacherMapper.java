@@ -3,6 +3,7 @@ package com.example.smserver.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.smserver.entity.Teacher;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @description:
@@ -11,4 +12,12 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface TeacherMapper extends BaseMapper<Teacher> {
+
+    /**
+     * id查找教师
+     *
+     * @param id id
+     * @return {@link Teacher}
+     */
+    Teacher getTchByNo(@Param("id") Long id);
 }

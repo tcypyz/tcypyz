@@ -52,12 +52,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private AccountClient<UserAddDTO> accountClient;
 
-    @Autowired
-    private StudentService studentService;
-
-    @Autowired
-    private TeacherService teacherService;
-
     @Override
     public List<MenuVO> getMenuList(Long id) {
         User user = getById(id);
@@ -123,6 +117,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         PageHelper.startPage(dto.getPage(), dto.getSize());
         List<User> userList = list();
         List<UserTableVO> resList = UserTableConverter.INSTANCE.toDataList(userList);
+
         resList.forEach(item -> {
             item.setRole(getRole(item.getRoleId()));
             int now = LocalDateTime.now().getYear();
