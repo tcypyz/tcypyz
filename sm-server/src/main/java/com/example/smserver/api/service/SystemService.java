@@ -1,4 +1,4 @@
-package com.example.smserver.service;
+package com.example.smserver.api.service;
 
 import com.example.smserver.core.CustomException;
 import com.example.smserver.entity.User;

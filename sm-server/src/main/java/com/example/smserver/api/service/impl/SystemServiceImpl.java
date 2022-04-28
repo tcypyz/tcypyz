@@ -1,10 +1,10 @@
-package com.example.smserver.service.impl;
+package com.example.smserver.api.service.impl;
 
 import com.example.smserver.core.CustomException;
 import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.entity.User;
 import com.example.smserver.mapper.UserMapper;
-import com.example.smserver.service.SystemService;
+import com.example.smserver.api.service.SystemService;
 import com.example.smserver.service.UserService;
 import com.example.smserver.utils.EncryptUtils;
 import com.example.smserver.utils.RedisUtils;

@@ -7,7 +7,7 @@ import com.example.smserver.core.result.ResultCode;
 import com.example.smserver.core.result.ResultFactory;
 import com.example.smserver.dto.LoginDTO;
 import com.example.smserver.entity.User;
-import com.example.smserver.service.SystemService;
+import com.example.smserver.api.service.SystemService;
 import com.example.smserver.vo.LoginVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

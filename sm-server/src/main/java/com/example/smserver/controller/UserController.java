@@ -1,5 +1,6 @@
 package com.example.smserver.controller;
 
+import com.example.smserver.api.service.AccountService;
 import com.example.smserver.core.CustomException;
 import com.example.smserver.core.base.BaseController;
 import com.example.smserver.core.base.BaseDTO;
@@ -11,7 +12,6 @@ import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.dto.UserEditDTO;
 import com.example.smserver.service.UserService;
-import com.example.smserver.service.impl.UserServiceImpl;
 import com.example.smserver.utils.TokenUtils;
 import com.example.smserver.vo.MenuVO;
 import com.example.smserver.vo.UserTableVO;
@@ -32,7 +32,7 @@ import java.util.List;
 public class UserController extends BaseController {
 
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
 
     @GetMapping("/menu")
     public Result<List<MenuVO>> menu() {
@@ -43,7 +43,7 @@ public class UserController extends BaseController {
                 throw new CustomException();
             }
             Long id = Long.parseLong(account);
-            return ResultFactory.buildSuccessResult(userService.getMenuList(id));
+            return ResultFactory.buildSuccessResult(accountService.getMenuList(id));
         } catch (Exception e) {
             e.printStackTrace();
             return ResultFactory.buildResult(ResultCode.UNAUTHORIZED, LoginContexts.TOKEN_ERROR, null);
@@ -52,25 +52,25 @@ public class UserController extends BaseController {
 
     @PostMapping(value = "/add")
     public Result<String> addUser(@RequestBody UserAddDTO dto) {
-        userService.addUser(dto);
+        accountService.addUser(dto);
         return ResultFactory.buildSuccessResult();
     }
 
     @PostMapping(value = "/list")
     public Result<PageInfo<UserTableVO>> list(@RequestBody BaseDTO dto) {
-        PageInfo<UserTableVO> pageInfo = userService.getPage(dto);
+        PageInfo<UserTableVO> pageInfo = accountService.getPage(dto);
         return ResultFactory.buildSuccessResult(pageInfo);
     }
 
     @PostMapping(value = "/delete")
     public Result<String> deleteUser(@RequestBody IdDTO dto) {
-        userService.deleteUser(dto);
+        accountService.deleteUser(dto);
         return ResultFactory.buildSuccessResult();
     }
 
     @PostMapping(value = "/edit")
     public Result<String> editUser(@RequestBody UserEditDTO dto) {
-        userService.editUser(dto);
+        accountService.editUser(dto);
         return ResultFactory.buildSuccessResult();
     }
 
