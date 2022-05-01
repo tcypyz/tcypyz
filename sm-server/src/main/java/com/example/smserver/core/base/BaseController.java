@@ -1,5 +1,8 @@
 package com.example.smserver.core.base;
 
+import com.example.smserver.core.CustomException;
+import com.example.smserver.utils.TokenUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -28,6 +31,14 @@ public class BaseController {
         return getRequest().getHeader("token");
     }
 
+    protected Long getUserId(){
+        String token = getHeaderToken();
+        String account = TokenUtils.getAccount(token);
+        if (StringUtils.isEmpty(account)) {
+            throw new CustomException();
+        }
+        return Long.parseLong(account);
+    }
     /**
      * 获取客户端Ip
      *

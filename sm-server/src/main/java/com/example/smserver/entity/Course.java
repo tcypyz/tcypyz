@@ -28,6 +28,11 @@ public class Course implements Serializable {
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;
     private LocalDateTime endTime;
+
+    /**
+     * unselected 未选人数
+     * count 开课人数
+     */
     private Integer unselected;
-    private Integer count;
+    private Integer countNum;
 }

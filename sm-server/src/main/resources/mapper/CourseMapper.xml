@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.smserver.mapper.CourseMapper">
+
+    <select id="selectAllCourse" resultType="com.example.smserver.vo.CourseVO">
+        select id, academic, class_name, open_user_id, status, create_time, end_time, count_num
+        from sms_course
+    </select>
+
+    <insert id="addCourseTeacher">
+        insert into sms_course(id, academic, class_name, open_user_id, create_time, end_time, unselected)
+        values (#{CourseDTO.courseId}, #{CourseDTO.academic}, #{CourseDTO.courseName}, #{CourseDTO.teacherId}, #{CourseDTO.openTime}, #{CourseDTO.endTime}, #{CourseDTO.chooseAbleNum})
+    </insert>
+
+    <delete id="deleteCourseTeacher">
+        delete from sms_course where id = #{courseId}
+    </delete>
+
+    <select id="selectCourseStudent" resultType="com.example.smserver.vo.SelectClassVO">
+        select class_name, open_user_id, create_time, end_time, academic
+        from sms_course
+        where id in
+        <foreach collection="courseIdList" item="id" index="index" open="(" separator="," close=")">
+            #{courseIdList}
+        </foreach>
+    </select>
+
+</mapper>

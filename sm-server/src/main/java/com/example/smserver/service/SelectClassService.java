@@ -1,6 +1,5 @@
 package com.example.smserver.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.smserver.core.base.BaseService;
 import com.example.smserver.entity.SelectClass;
 import com.example.smserver.mapper.SelectClassMapper;

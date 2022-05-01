@@ -8,7 +8,6 @@ package com.example.smserver.core.context;
  */
 public interface LoginContexts {
 
-
     String USER_STATE_ERROR = "用户状态异常，请重新登录";
 
     String AUTHENTIC_FAIL = "认证失败：身份验证异常";
