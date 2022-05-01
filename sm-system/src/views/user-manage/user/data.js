@@ -10,7 +10,36 @@ export const formData = {
   profession: '',
   occupation: '',
 };
-
+export const initData = {
+  form: {
+    no: '',
+    name: '',
+    password: '123456',
+    sex: 1,
+    phone: '',
+    birth: '',
+    college: '',
+    role: 2,
+    profession: '',
+    occupation: '',
+  },
+  editForm: {
+    id: '',
+    name: '',
+    sex: 1,
+    phone: '',
+    birth: '',
+    roleId: 2,
+  },
+  list: [],
+  pagination: {
+    page: 1,
+    size: 10,
+  },
+  pageOption: {
+    total: 0,
+  },
+};
 export const formRules = {
   no: [{
     required: true,

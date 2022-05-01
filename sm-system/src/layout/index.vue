@@ -1,6 +1,10 @@
 <template>
   <a-layout has-sider class="main-layout">
-    <a-layout-sider  v-model:collapsed="collapsed" collapsible :trigger="null">
+    <a-layout-sider 
+      v-model:collapsed="collapsed" 
+      collapsible 
+      :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0, top: 0, bottom: 0 }"
+      :trigger="null">
       <div class="logo">
         <div>
           <Icon icon="logos:ant-design" style="font-size: 32px; vertical-align: middle;"/>
@@ -9,7 +13,7 @@
       </div>
       <PermissionMenu :menu="menuList"/>
     </a-layout-sider>
-    <a-layout>
+    <a-layout :style="{ marginLeft: '200px' }">
       <a-layout-header :style="{ background: '#fff', padding: 0 }">
         <Header :collapsed="collapsed" @clickCollapse="handleClickCollapse"/>
       </a-layout-header>
