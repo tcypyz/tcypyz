@@ -21,8 +21,8 @@ public class CourseController extends BaseController {
 
     @GetMapping("/allCourse")
     public Result<List<CourseVO>> selectAllCourse() {
-        List<CourseVO> courseVOS = apiCourseService.selectAllCourse();
-        return ResultFactory.buildSuccessResult(courseVOS);
+        List<CourseVO> courseVoS = apiCourseService.selectAllCourse();
+        return ResultFactory.buildSuccessResult(courseVoS);
     }
 
     @PostMapping("/teacherOpenClass")
@@ -40,7 +40,7 @@ public class CourseController extends BaseController {
     @GetMapping("/studentSelected")
     public Result<List<SelectClassVO>> selectCourseStudent() {
         Long id = getUserId();
-        List<SelectClassVO> selectClassVOS = apiCourseService.selectCourseStudent(id);
-        return ResultFactory.buildSuccessResult(selectClassVOS);
+        List<SelectClassVO> selectClassVoS = apiCourseService.selectCourseStudent(id);
+        return ResultFactory.buildSuccessResult(selectClassVoS);
     }
 }

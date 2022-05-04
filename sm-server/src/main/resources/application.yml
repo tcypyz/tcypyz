@@ -2,11 +2,16 @@ server:
   port: 8080
 
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
   datasource: #mysql数据库连接配置
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://42.194.163.38:3306/sms?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: sms
     password: 325root
+
   redis:
     host: 42.194.163.38
     port: 6379

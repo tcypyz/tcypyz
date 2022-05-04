@@ -14,6 +14,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,8 +54,10 @@ public class ApiCourseServiceImpl implements ApiCourseService {
                 .stream()
                 .map(SelectClass::getClassId)
                 .collect(Collectors.toList());
-        // return courseService.getBaseMapper().selectCourseStudent(courseIdList);
-        List<Course> courseList = courseService.lambdaQuery().in(CollectionUtils.isNotEmpty(courseIdList), Course::getId, courseIdList).list();
+        if(CollectionUtils.isEmpty(courseIdList)){
+           return new ArrayList<>();
+        }
+        List<Course> courseList = courseService.lambdaQuery().in( Course::getId, courseIdList).list();
 
         List<SelectClassVO> selectClassVOList = CourseVoConverter.INSTANCE.toDataList(courseList);
         selectClassVOList.forEach(item -> {

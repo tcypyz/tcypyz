@@ -1,6 +1,7 @@
 package com.example.smserver.core.base;
 
 import com.example.smserver.core.CustomException;
+import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.utils.TokenUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -32,12 +33,19 @@ public class BaseController {
     }
 
     protected Long getUserId(){
-        String token = getHeaderToken();
-        String account = TokenUtils.getAccount(token);
-        if (StringUtils.isEmpty(account)) {
-            throw new CustomException();
+        try {
+            String token = getHeaderToken();
+            if (StringUtils.isEmpty(token)){
+                throw new CustomException(LoginContexts.TOKEN_INVALID);
+            }
+            String account = TokenUtils.getAccount(token);
+            if (StringUtils.isEmpty(account)) {
+                throw new CustomException(LoginContexts.AUTHENTIC_FAIL);
+            }
+            return Long.parseLong(account);
+        } catch (CustomException | NumberFormatException e) {
+            throw new CustomException(e);
         }
-        return Long.parseLong(account);
     }
     /**
      * 获取客户端Ip

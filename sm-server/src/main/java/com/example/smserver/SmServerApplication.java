@@ -1,6 +1,7 @@
 package com.example.smserver;
 
 import com.example.smserver.config.LogInterceptor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
@@ -12,11 +13,13 @@ import org.springframework.web.servlet.DispatcherServlet;
  * @author maoshen5478
  */
 @SpringBootApplication
+@Slf4j
 public class SmServerApplication {
 
     public static void main(String[] args) {
         try {
             SpringApplication.run(SmServerApplication.class, args);
+            log.info("http://localhost:{}/swagger-ui/index.html","8080");
         } catch (Exception e) {
             e.printStackTrace();
         }
