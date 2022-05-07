@@ -21,11 +21,4 @@ public interface UserMapper extends BaseMapper<User> {
      */
     User getByNo(@Param("id") Long id);
 
-    /**
-     * user_id查找教师
-     *
-     * @param id id
-     * @return {@link User}
-     */
-    User getTeaVoByNo(@Param("id") Long id);
 }

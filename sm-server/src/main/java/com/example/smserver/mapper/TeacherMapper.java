@@ -13,11 +13,4 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface TeacherMapper extends BaseMapper<Teacher> {
 
-    /**
-     * id查找教师
-     *
-     * @param id id
-     * @return {@link Teacher}
-     */
-    Teacher getTchByNo(@Param("id") Long id);
 }

@@ -18,12 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/student")
 public class StudentController {
 
-    @Autowired
-    private TeacherService teacherService;
-
     @RequestMapping("/filter")
     public Result<String> handleError(){
-        System.out.println(teacherService.getBaseMapper().getTchByNo(1515337023803723778L));
         return ResultFactory.buildResult(ResultCode.SUCCESS, LoginContexts.TOKEN_ERROR);
     }
 }

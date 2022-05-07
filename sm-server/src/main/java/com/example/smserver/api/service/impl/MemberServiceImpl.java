@@ -35,19 +35,14 @@ public class MemberServiceImpl implements MemberService {
         PageHelper.startPage(dto.getPage(), dto.getSize());
         List<Teacher> teacherList = teacherService.list();
         List<TeacherTableVO> resList = TeacherTableConverter.INSTANCE.toDataList(teacherList);
-
         resList.forEach(item -> {
-            Teacher teacher = teacherService.getBaseMapper().getTchByNo(item.getUserId());
-            User user = userService.getBaseMapper().getTeaVoByNo(teacher.getUserId());
-
+            User user = userService.getById(item.getUserId());
             item.setName(user.getName());
             item.setPhone(user.getPhone());
             item.setSex(user.getSex());
         });
-
         PageInfo<TeacherTableVO> result = new PageInfo<>();
         PageInfoUtils.transform(new PageInfo<>(teacherList), result);
-
         result.setList(resList);
         return result;
     }

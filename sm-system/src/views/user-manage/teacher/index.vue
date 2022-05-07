@@ -1,28 +1,73 @@
 <template>
-  <div>teacher
-    <div>dashboard</div>
+  <div>
     <a-spin :spinning="spinning">
-    <a-alert
-      message="Alert message title"
-      description="Further details about the context of this alert."
-    ></a-alert>
-  </a-spin>
-  <div class="spin-state">
-    Loading state：
-    <a-switch v-model:checked="spinning" />
-  </div>
+      <a-table 
+        :dataSource="data.list" 
+        :columns="TABLE_COLUMS" 
+        :pagination="false"
+      >
+        <template #bodyCell="{ column, record }">
+           <template v-if="column.key === 'sex'">
+              {{ SexEnum.properties[record.sex].zh }}
+            </template>
+            <template v-if="column.key === 'action'">
+              <span>
+                <a @click="handleDelete(record)">删除</a>
+                <a-divider type="vertical"/>
+                <a @click="handleEdit(record)">编辑</a>
+              </span>
+            </template>
+        </template>
+      </a-table>
+    </a-spin>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
+import { 
+  defineComponent, 
+  ref, 
+  reactive, 
+  toRefs, 
+  onMounted, 
+} from 'vue';
+import { getList } from '@/api/teacher';
+import { TABLE_COLUMS } from './data';
+import { SexEnum } from '@/type/enum';
 
 export default defineComponent({
   setup() {
     const spinning = ref(false);
-    console.log(11);
+    const data = reactive({
+      pagination: {
+        page: 1,
+        size: 100,
+      },
+      list: [],
+    });
+    const state = reactive({
+      SexEnum,
+      TABLE_COLUMS,
+      handleDelete(row) {},
+      handleEdit(row) {},
+    });
+    const initList = (params) => {
+      spinning.value = true;
+      getList(params).then(res => {
+        data.list = res.list.map(item => {
+          return { ...item, key: item.userId };
+        });
+      }).finally(() => {
+        spinning.value = false;
+      });
+    };
+    onMounted(() => {
+      initList(data.pagination);
+    });
     return {
       spinning,
+      data,
+      ...toRefs(state),
     };
   },
 });
