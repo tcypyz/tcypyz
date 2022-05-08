@@ -13,11 +13,11 @@
       </div>
       <PermissionMenu :menu="menuList"/>
     </a-layout-sider>
-    <a-layout :style="{ marginLeft: '200px' }">
+    <a-layout :style="{ marginLeft: collapsed ? '80px' :  '200px' }">
       <a-layout-header :style="{ background: '#fff', padding: 0 }">
         <Header :collapsed="collapsed" @clickCollapse="handleClickCollapse"/>
       </a-layout-header>
-      <a-layout-content :style="{ margin: '24px 16px 0' }">
+      <a-layout-content :style="{ margin: '20px 16px 0' }">
         <Views/>
       </a-layout-content>
     </a-layout>

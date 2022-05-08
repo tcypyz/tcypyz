@@ -5,6 +5,7 @@ const API = {
   list: '/user/list',
   edit: '/user/edit',
   del: '/user/delete',
+  info: '/user',
 };
 
 export function add(data) {
@@ -37,4 +38,11 @@ export function deleteUser(data) {
     method: 'POST',
     data,
   });
+}
+
+export function getInfo() {
+  return request({
+    url: API.info,
+    method: 'GET',
+  }); 
 }

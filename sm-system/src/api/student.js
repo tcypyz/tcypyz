@@ -1,12 +1,12 @@
 import request from '@/utils/request';
 
 const API = {
-  st: '/student/filter',
+  list: '/student/',
 };
 
-export function st() {
+export function getList() {
   return request({
-    url: API.st,
-    method: 'GET',
+    url: API.list,
+    method: 'post',
   });
 }
