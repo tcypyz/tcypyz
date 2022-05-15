@@ -11,19 +11,24 @@ import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.dto.UserEditDTO;
 import com.example.smserver.entity.*;
+import com.example.smserver.handle.DashboardHandle;
 import com.example.smserver.handle.client.AccountClient;
+import com.example.smserver.handle.client.DashboardClient;
 import com.example.smserver.service.*;
 import com.example.smserver.type.RoleEnum;
 import com.example.smserver.utils.DateUtils;
 import com.example.smserver.utils.EncryptUtils;
 import com.example.smserver.utils.PageInfoUtils;
+import com.example.smserver.vo.DashboardVO;
 import com.example.smserver.vo.MenuVO;
 import com.example.smserver.vo.UserTableVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -54,6 +59,9 @@ public class AccountServiceImpl implements AccountService {
     private AccountClient<UserAddDTO> accountClient;
 
     @Autowired
+    private DashboardClient dashboardClient;
+
+    @Autowired
     private StudentService studentService;
 
     @Autowired
@@ -75,7 +83,7 @@ public class AccountServiceImpl implements AccountService {
                 .list();
         List<MenuVO> result = new ArrayList<>();
         menuList.forEach(item -> {
-            if (item.getPid().equals(0L)) {
+            if (item.getPid().equals(DigitalContexts.ZERO_LONG)) {
                 result.add(convert(item));
             } else {
                 result.forEach(resultItem -> {
@@ -94,6 +102,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addUser(UserAddDTO dto) {
         dto.setPassword(EncryptUtils.encrypt(dto.getPassword()));
         User user = User.builder()
@@ -138,10 +147,13 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void deleteUser(IdDTO dto) {
         userService.removeByIds(dto.getIdList());
-        teacherService.remove(new LambdaQueryWrapper<Teacher>().in(Teacher::getUserId, dto.getIdList()));
-        studentService.remove(new LambdaQueryWrapper<Student>().in(Student::getUserId, dto.getIdList()));
+        if (CollectionUtils.isNotEmpty(dto.getIdList())) {
+            teacherService.remove(new LambdaQueryWrapper<Teacher>().in(Teacher::getUserId, dto.getIdList()));
+            studentService.remove(new LambdaQueryWrapper<Student>().in(Student::getUserId, dto.getIdList()));
+        }
     }
 
     @Override
@@ -149,6 +161,11 @@ public class AccountServiceImpl implements AccountService {
         User user = userService.getById(dto.getId());
         UserEditConverter.INSTANCE.fromDataNoNull(dto, user);
         userService.updateById(user);
+    }
+
+    @Override
+    public DashboardVO getDashboardInfo(User user) {
+        return dashboardClient.doHandler(user.getRoleId().toString(), user);
     }
 
     private MenuVO convert(Menu from) {

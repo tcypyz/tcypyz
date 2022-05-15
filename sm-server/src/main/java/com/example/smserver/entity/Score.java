@@ -24,7 +24,7 @@ public class Score implements Serializable {
     private Long studentId;
     private Long classId;
     private Integer result;
-    private Integer usual;
+    private Integer common;
     private Integer finalExam;
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;

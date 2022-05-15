@@ -15,11 +15,11 @@ import java.util.Map;
  * @time: 2022/4/22
  */
 @Component
-public abstract class AbstractClient<C> implements InitializingBean {
+public abstract class AbstractClient<Client> implements InitializingBean {
 
     protected ApplicationContextHelper applicationContextHelper;
 
-    protected final Map<String, C> handle = new HashMap<>();
+    protected final Map<String, Client> handle = new HashMap<>();
 
     @Autowired
     public void setApplicationContext(ApplicationContextHelper applicationContext){

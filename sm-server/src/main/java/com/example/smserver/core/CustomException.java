@@ -14,6 +14,7 @@ public class CustomException extends RuntimeException {
     public CustomException(Throwable cause) {
         super(cause);
     }
+
     public CustomException() {
         super();
     }

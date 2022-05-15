@@ -11,8 +11,10 @@ import com.example.smserver.core.result.ResultFactory;
 import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.dto.UserEditDTO;
+import com.example.smserver.entity.User;
 import com.example.smserver.service.UserService;
 import com.example.smserver.utils.TokenUtils;
+import com.example.smserver.vo.DashboardVO;
 import com.example.smserver.vo.MenuVO;
 import com.example.smserver.vo.UserTableVO;
 import com.github.pagehelper.PageInfo;
@@ -33,6 +35,9 @@ public class UserController extends BaseController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/menu")
     public Result<List<MenuVO>> menu() {
@@ -72,6 +77,13 @@ public class UserController extends BaseController {
     public Result<String> editUser(@RequestBody UserEditDTO dto) {
         accountService.editUser(dto);
         return ResultFactory.buildSuccessResult();
+    }
+
+    @GetMapping(value = "/dashboard/info")
+    public Result<DashboardVO> getDashboardInfo(){
+        User user = userService.getById(getUserId());
+        DashboardVO info = accountService.getDashboardInfo(user);
+        return ResultFactory.buildSuccessResult(info);
     }
 
 }

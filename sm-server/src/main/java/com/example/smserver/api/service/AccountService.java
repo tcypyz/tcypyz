@@ -4,6 +4,8 @@ import com.example.smserver.core.base.BaseDTO;
 import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.dto.UserEditDTO;
+import com.example.smserver.entity.User;
+import com.example.smserver.vo.DashboardVO;
 import com.example.smserver.vo.MenuVO;
 import com.example.smserver.vo.UserTableVO;
 import com.github.pagehelper.PageInfo;
@@ -61,4 +63,12 @@ public interface AccountService {
      * @param dto dto
      */
     void editUser(UserEditDTO dto);
+
+    /**
+     * 获取首页信息
+     *
+     * @param user 用户
+     * @return {@link DashboardVO}
+     */
+    DashboardVO getDashboardInfo(User user);
 }

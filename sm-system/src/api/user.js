@@ -6,6 +6,7 @@ const API = {
   edit: '/user/edit',
   del: '/user/delete',
   info: '/user',
+  dashboard: '/user/dashboard/info',
 };
 
 export function add(data) {
@@ -45,4 +46,11 @@ export function getInfo() {
     url: API.info,
     method: 'GET',
   }); 
+}
+
+export function getDashboardInfo() {
+  return request({
+    url: API.dashboard,
+    method: 'GET',
+  });
 }
