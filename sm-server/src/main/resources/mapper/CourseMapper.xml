@@ -2,27 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.smserver.mapper.CourseMapper">
 
-    <select id="selectAllCourse" resultType="com.example.smserver.vo.CourseVO">
-        select id, academic, class_name, open_user_id, status, create_time, end_time, count_num
+    <update id="updateCourseTeacher">
+        update sms_course
+        <set>
+            <if test="class_name!=null">class_name=#{CourseDTO.className},</if>
+            <if test="end_time!=null">end_time=#{CourseDTO.endTime},</if>
+            <if test="academic!=null">academic=#{CourseDTO.academic},</if>
+            <if test="count_num!=null">count_num=#{CourseDTO.countNum},</if>
+            <if test="status!=null">status=#{CourseDTO.status}</if>
+        </set>
+        where id = #{CourseDTO.id}
+    </update>
+
+    <select id="selectCourseTeacher" resultType="com.example.smserver.vo.CourseVO">
+        select id,academic,className,status,createTime,endTime,countNum,unselected
         from sms_course
+        where id = #{CourseVO.openUserId}
     </select>
 
     <insert id="addCourseTeacher">
-        insert into sms_course(id, academic, class_name, open_user_id, create_time, end_time, unselected)
-        values (#{CourseDTO.courseId}, #{CourseDTO.academic}, #{CourseDTO.courseName}, #{CourseDTO.teacherId}, #{CourseDTO.openTime}, #{CourseDTO.endTime}, #{CourseDTO.chooseAbleNum})
+        insert into sms_course(id, class_name, academic, create_time, end_time, count_num, open_user_id)
+        values (#{CourseDTO.id}, #{CourseDTO.className}, #{CourseDTO.academic}, #{CourseDTO.createTime},
+                #{CourseDTO.endTime}, #{CourseDTO.countNum},#{CourseDTO.openUserId})
     </insert>
 
     <delete id="deleteCourseTeacher">
-        delete from sms_course where id = #{courseId}
-    </delete>
-
-    <select id="selectCourseStudent" resultType="com.example.smserver.vo.SelectClassVO">
-        select class_name, open_user_id, create_time, end_time, academic
+        delete
         from sms_course
-        where id in
-        <foreach collection="courseIdList" item="id" index="index" open="(" separator="," close=")">
-            #{courseIdList}
-        </foreach>
-    </select>
+        where id = #{courseId}
+    </delete>
 
 </mapper>

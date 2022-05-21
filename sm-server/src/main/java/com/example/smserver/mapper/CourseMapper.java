@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.smserver.dto.CourseDTO;
 import com.example.smserver.entity.Course;
 import com.example.smserver.vo.CourseVO;
-import com.example.smserver.vo.SelectClassVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,11 +18,12 @@ import java.util.List;
 public interface CourseMapper extends BaseMapper<Course> {
 
     /**
-     * 查询所有课程
+     * 查询课程-老师
      *
+     * @param courseVO 课程vo
      * @return {@link List}<{@link CourseVO}>
      */
-    List<CourseVO> selectAllCourse();
+    List<CourseVO> selectCourseTeacher(@Param("CourseVO") CourseVO courseVO);
 
     /**
      * 添加课程-老师
@@ -42,11 +42,10 @@ public interface CourseMapper extends BaseMapper<Course> {
     int deleteCourseTeacher(@Param("courseId") Long courseId);
 
     /**
-     * 查询已选课程-学生
+     * 更新课程-老师
      *
-     * @param courseIdList 课程id列表
-     * @return {@link List}<{@link SelectClassVO}>
+     * @param courseDTO 课程dto
+     * @return int
      */
-    List<SelectClassVO> selectCourseStudent(@Param("courseIdList") List<Long> courseIdList);
-
+    int updateCourseTeacher(@Param("CourseDTO") CourseDTO courseDTO);
 }

@@ -26,10 +26,9 @@ public interface SelectClassMapper extends BaseMapper<SelectClass> {
      * 删除课程-学生
      *
      * @param courseId  进程id
-     * @param studentId 学生证
+     * @param studentId 学生id
      * @return int
      */
     int deleteCourseStudent(@Param("courseId") Long courseId, @Param("studentId") Long studentId);
-
 
 }

@@ -4,19 +4,17 @@ import com.example.smserver.api.service.ApiCourseService;
 import com.example.smserver.converter.CourseVoConverter;
 import com.example.smserver.dto.CourseDTO;
 import com.example.smserver.entity.Course;
-import com.example.smserver.entity.SelectClass;
 import com.example.smserver.service.CourseService;
-import com.example.smserver.service.SelectClassService;
 import com.example.smserver.service.UserService;
 import com.example.smserver.vo.CourseVO;
-import com.example.smserver.vo.SelectClassVO;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ApiCourseServiceImpl implements ApiCourseService {
@@ -25,45 +23,42 @@ public class ApiCourseServiceImpl implements ApiCourseService {
     private CourseService courseService;
 
     @Autowired
-    private SelectClassService selectClassService;
-
-    @Autowired
     private UserService userService;
 
     @Override
-    public List<CourseVO> selectAllCourse() {
-        return courseService.getBaseMapper().selectAllCourse();
-    }
-
-    @Override
-    public int addCourseTeacher(CourseDTO courseDTO) {
-        return courseService.getBaseMapper().addCourseTeacher(courseDTO);
-    }
-
-    @Override
-    public int deleteCourseTeacher(Long courseId) {
-        return courseService.getBaseMapper().deleteCourseTeacher(courseId);
-    }
-
-    @Override
-    public List<SelectClassVO> selectCourseStudent(Long studentId) {
-        List<Long> courseIdList = selectClassService
-                .lambdaQuery()
-                .eq(SelectClass::getStudentId, studentId)
-                .list()
-                .stream()
-                .map(SelectClass::getClassId)
-                .collect(Collectors.toList());
-        if(CollectionUtils.isEmpty(courseIdList)){
-           return new ArrayList<>();
+    public List<CourseVO> selectCourseTeacher(Long teacherId) {
+        List<Course> courseList = courseService.lambdaQuery()
+                .eq(Course::getOpenUserId, teacherId)
+                .list();
+        if(CollectionUtils.isEmpty(courseList)){
+            return new ArrayList<>();
         }
-        List<Course> courseList = courseService.lambdaQuery().in( Course::getId, courseIdList).list();
+        List<CourseVO> courseVOList = CourseVoConverter.INSTANCE.toDataList(courseList);
+        courseVOList.forEach(item -> item.setTeacherName(userService.getById(item.getOpenUserId()).getName()));
+        return courseVOList;
+    }
 
-        List<SelectClassVO> selectClassVOList = CourseVoConverter.INSTANCE.toDataList(courseList);
-        selectClassVOList.forEach(item -> {
-            item.setTeacherName(userService.getById(item.getOpenUserId()).getName());
-        });
+    @Override
+    public void addCourseTeacher(CourseDTO courseDTO) {
+        if (courseDTO.getCreateTime() == null) {
+            courseDTO.setCreateTime(LocalDateTime.now());
+        }
+        courseService.getBaseMapper().addCourseTeacher(courseDTO);
+    }
 
-        return selectClassVOList;
+    @Override
+    public void deleteCourseTeacher(Long courseId) {
+        Course course = courseService.lambdaQuery()
+                .eq(Course::getId, courseId).getEntity();
+        if(!ObjectUtils.isEmpty(course)) {
+            courseService.getBaseMapper().deleteCourseTeacher(courseId);
+        }
+    }
+
+    @Override
+    public void updateCourseTeacher(CourseDTO courseDTO) {
+        if(!ObjectUtils.isEmpty(courseDTO)) {
+            courseService.getBaseMapper().updateCourseTeacher(courseDTO);
+        }
     }
 }

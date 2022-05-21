@@ -2,11 +2,10 @@ package com.example.smserver.converter;
 
 import com.example.smserver.core.base.Converter;
 import com.example.smserver.entity.Course;
-import com.example.smserver.vo.SelectClassVO;
+import com.example.smserver.vo.CourseVO;
 import org.mapstruct.factory.Mappers;
 
-@org.mapstruct.Mapper
-public interface CourseVoConverter extends Converter<Course, SelectClassVO> {
+public interface CourseVoConverter extends Converter<Course, CourseVO> {
 
     CourseVoConverter INSTANCE = Mappers.getMapper(CourseVoConverter.class);
 }

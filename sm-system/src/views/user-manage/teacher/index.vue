@@ -1,9 +1,9 @@
 <template>
   <div>
     <a-spin :spinning="spinning">
-      <a-table 
-        :dataSource="data.list" 
-        :columns="TABLE_COLUMS" 
+      <a-table
+        :dataSource="data.list"
+        :columns="TABLE_COLUMS"
         :pagination="false"
       >
         <template #bodyCell="{ column, record }">
@@ -24,12 +24,12 @@
 </template>
 
 <script>
-import { 
-  defineComponent, 
-  ref, 
-  reactive, 
-  toRefs, 
-  onMounted, 
+import {
+  defineComponent,
+  ref,
+  reactive,
+  toRefs,
+  onMounted,
 } from 'vue';
 import { getList } from '@/api/teacher';
 import { TABLE_COLUMS } from './data';
@@ -45,12 +45,14 @@ export default defineComponent({
       },
       list: [],
     });
+    // 表格通用事情
     const state = reactive({
       SexEnum,
       TABLE_COLUMS,
       handleDelete(row) {},
       handleEdit(row) {},
     });
+    // 加载表格数据
     const initList = (params) => {
       spinning.value = true;
       getList(params).then(res => {
@@ -61,6 +63,7 @@ export default defineComponent({
         spinning.value = false;
       });
     };
+    // 初始化列表
     onMounted(() => {
       initList(data.pagination);
     });

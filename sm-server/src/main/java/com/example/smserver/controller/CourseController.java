@@ -6,7 +6,6 @@ import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultFactory;
 import com.example.smserver.dto.CourseDTO;
 import com.example.smserver.vo.CourseVO;
-import com.example.smserver.vo.SelectClassVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,14 +18,15 @@ public class CourseController extends BaseController {
     @Autowired
     private ApiCourseService apiCourseService;
 
-    @GetMapping("/allCourse")
-    public Result<List<CourseVO>> selectAllCourse() {
-        List<CourseVO> courseVoS = apiCourseService.selectAllCourse();
-        return ResultFactory.buildSuccessResult(courseVoS);
+    @GetMapping("/teacherSelectClass")
+    public Result<List<CourseVO>> selectCourseTeacher() {
+        List<CourseVO> courseVOList = apiCourseService.selectCourseTeacher(getUserId());
+        return ResultFactory.buildSuccessResult(courseVOList);
     }
 
     @PostMapping("/teacherOpenClass")
-    public Result<String> addCourseTeacher(CourseDTO courseDTO) {
+    public Result<String> addCourseTeacher(@RequestBody CourseDTO courseDTO) {
+        courseDTO.setOpenUserId(getUserId());
         apiCourseService.addCourseTeacher(courseDTO);
         return ResultFactory.buildSuccessResult();
     }
@@ -37,10 +37,4 @@ public class CourseController extends BaseController {
         return ResultFactory.buildSuccessResult();
     }
 
-    @GetMapping("/studentSelected")
-    public Result<List<SelectClassVO>> selectCourseStudent() {
-        Long id = getUserId();
-        List<SelectClassVO> selectClassVoS = apiCourseService.selectCourseStudent(id);
-        return ResultFactory.buildSuccessResult(selectClassVoS);
-    }
 }
