@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Data
 @ToString
-public class IdDTO implements Serializable {
+public class IdDTO {
     private Long id;
     private List<Long> idList;
 }

@@ -11,7 +11,6 @@ import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.dto.UserEditDTO;
 import com.example.smserver.entity.*;
-import com.example.smserver.handle.DashboardHandle;
 import com.example.smserver.handle.client.AccountClient;
 import com.example.smserver.handle.client.DashboardClient;
 import com.example.smserver.service.*;
@@ -21,10 +20,10 @@ import com.example.smserver.utils.EncryptUtils;
 import com.example.smserver.utils.PageInfoUtils;
 import com.example.smserver.vo.DashboardVO;
 import com.example.smserver.vo.MenuVO;
+import com.example.smserver.vo.UserInfoVO;
 import com.example.smserver.vo.UserTableVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -166,6 +165,22 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public DashboardVO getDashboardInfo(User user) {
         return dashboardClient.doHandler(user.getRoleId().toString(), user);
+    }
+
+    @Override
+    public UserInfoVO getUserInfo(Long userId, Long roleId) {
+        UserInfoVO info = new UserInfoVO();
+        if(roleId.equals(RoleEnum.ADMIN.getId())){
+            info.setCollege("");
+            info.setNo("");
+            info.setProfession("");
+        }
+        return info;
+    }
+
+    @Override
+    public void changePassword(Long userId, String password) {
+        userService.lambdaUpdate().eq(User::getId, userId).set(User::getPassword, EncryptUtils.encrypt(password));
     }
 
     private MenuVO convert(Menu from) {

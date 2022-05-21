@@ -5,9 +5,13 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+/**
+ * @author wlt
+ */
 @Data
 @ToString
 public class CourseDTO {
+
     private Long id;
     private String className;
     private String academic;
@@ -15,6 +19,6 @@ public class CourseDTO {
     private LocalDateTime endTime;
     private Integer countNum;
     private Long openUserId;
-    private int status;
+    private Integer status;
 
 }

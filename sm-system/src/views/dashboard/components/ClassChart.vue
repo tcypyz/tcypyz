@@ -1,8 +1,6 @@
 <template>
   <div>
-    <a-card title="选课情况">
-      <BaseEchart :options="options" />
-    </a-card>
+    <BaseEchart :options="options" />
   </div>
 </template>
 

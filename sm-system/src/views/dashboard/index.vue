@@ -16,7 +16,7 @@
           <div>
             福州大学至诚学院
             <a-divider type="vertical"/>
-            {{ userInfo.college }} 
+            {{ userInfo.college }}
             <a-divider type="vertical"/>
             {{ userInfo.profession }}
             <a-divider type="vertical"/>
@@ -35,10 +35,13 @@
     </div>
     <div class="page-container">
       <div style="margin-bottom: 8px">
-        <ClassChart :xAxisData="data.axis" :seriesData="data.series" />
+        <a-card title="选课情况">
+          <ClassChart v-if="data.axis.length !== 0" :xAxisData="data.axis" :seriesData="data.series" />
+          <a-empty v-else/>
+        </a-card>
       </div>
-      <a-row :gutter="16">
-        <a-col :span="16">
+      <a-row type="flex" :gutter="16">
+        <a-col flex="auto">
           <div>
             <a-card title="已选课程">
               <a-list item-layout="vertical" size="middle" :data-source="data.classList">
@@ -61,27 +64,28 @@
             </a-card>
           </div>
         </a-col>
-        <a-col :spn="8">
-          <div :style=" {width: '485px'}">
+        <a-col flex="400px">
+          <div :style=" {width: '400px'}">
             <a-calendar :fullscreen="false"></a-calendar>
           </div>
         </a-col>
       </a-row>
-      
+
     </div>
   </div>
 </template>
 
 <script>
-import { 
-  computed, 
-  defineComponent, 
-  onMounted, 
-  reactive, 
+import {
+  computed,
+  defineComponent,
+  onMounted,
+  reactive,
   ref,
 } from 'vue';
 import { useStore } from 'vuex';
 import ClassChart from './components/ClassChart.vue';
+import { getDashboardInfo } from '@/api/user';
 
 export default defineComponent({
   name: 'Dashboad',
@@ -95,12 +99,18 @@ export default defineComponent({
       select: 0,
       score: 0,
       classList: [],
-      axis: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-      series: [10, 52, 200, 334, 390, 330, 220],
+      axis: [],
+      series: [],
     });
     onMounted(() => {
-      // store.dispatch('getInfo');
-      data.classList = ['数据库', '计算机网络', 'java'];
+      // store.dispatch('info');
+      getDashboardInfo().then(res => {
+        data.axis = res.xAxis;
+        data.classList = res.courseList;
+        data.score = res.score;
+        data.select = res.select;
+        data.series = res.series;
+      });
     });
     return {
       spinning,

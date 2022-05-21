@@ -7,6 +7,7 @@ import com.example.smserver.dto.UserEditDTO;
 import com.example.smserver.entity.User;
 import com.example.smserver.vo.DashboardVO;
 import com.example.smserver.vo.MenuVO;
+import com.example.smserver.vo.UserInfoVO;
 import com.example.smserver.vo.UserTableVO;
 import com.github.pagehelper.PageInfo;
 
@@ -71,4 +72,21 @@ public interface AccountService {
      * @return {@link DashboardVO}
      */
     DashboardVO getDashboardInfo(User user);
+
+    /**
+     * 获取用户信息
+     *
+     * @param userId 用户id
+     * @param roleId 角色id
+     * @return {@link UserInfoVO}
+     */
+    UserInfoVO getUserInfo(Long userId, Long roleId);
+
+    /**
+     * 更改密码
+     *
+     * @param password 密码
+     * @param userId   用户id
+     */
+    void changePassword(Long userId, String password);
 }

@@ -9,6 +9,7 @@ import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultCode;
 import com.example.smserver.core.result.ResultFactory;
 import com.example.smserver.dto.IdDTO;
+import com.example.smserver.dto.PasswordDTO;
 import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.dto.UserEditDTO;
 import com.example.smserver.entity.User;
@@ -16,6 +17,7 @@ import com.example.smserver.service.UserService;
 import com.example.smserver.utils.TokenUtils;
 import com.example.smserver.vo.DashboardVO;
 import com.example.smserver.vo.MenuVO;
+import com.example.smserver.vo.UserInfoVO;
 import com.example.smserver.vo.UserTableVO;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -86,4 +88,16 @@ public class UserController extends BaseController {
         return ResultFactory.buildSuccessResult(info);
     }
 
+    @GetMapping(value = "/info")
+    public Result<UserInfoVO> getUserInfo(){
+        User user = userService.getById(getUserId());
+        UserInfoVO info = accountService.getUserInfo(user.getId(), user.getRoleId());
+        return ResultFactory.buildSuccessResult(info);
+    }
+
+    @PostMapping(value = "/change/password")
+    public Result<String> change(@RequestBody PasswordDTO dto){
+        accountService.changePassword(getUserId(), dto.getPass());
+        return ResultFactory.buildSuccessResult();
+    }
 }

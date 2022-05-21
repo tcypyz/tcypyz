@@ -1,7 +1,7 @@
 import { getInfo } from '@/api/user';
 const state = {
-  college: '福州大学至诚学院',
-  profession: '计算机工程系',
+  college: '计算机工程系',
+  profession: '计算机科学与技术',
   no: '29412767',
 };
 
