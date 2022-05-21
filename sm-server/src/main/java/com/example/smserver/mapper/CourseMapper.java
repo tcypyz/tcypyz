@@ -18,6 +18,7 @@ import java.util.List;
 @Mapper
 public interface CourseMapper extends BaseMapper<Course> {
 
+
     /**
      * 查询所有课程
      *
