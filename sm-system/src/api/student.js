@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 const API = {
-  list: '/student/',
+  list: '/student/list',
 };
 
 export function getList() {

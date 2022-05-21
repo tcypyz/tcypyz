@@ -5,7 +5,6 @@ import com.example.smserver.core.base.BaseController;
 import com.example.smserver.core.base.BaseDTO;
 import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultFactory;
-import com.example.smserver.service.TeacherService;
 import com.example.smserver.vo.TeacherTableVO;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
