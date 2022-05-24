@@ -26,6 +26,13 @@ public interface BaseService<M extends BaseMapper<T>, T> extends IService<T> {
     M getBaseMapper();
 
     /**
+     * lambda的条件构造器
+     *
+     * @return {@link LambdaQueryWrapper}<{@link T}>
+     */
+    LambdaQueryWrapper<T> lambdaWrapper();
+
+    /**
      * 查询列表
      *
      * @param wrapper   lambda的条件构造器

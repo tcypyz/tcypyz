@@ -1,5 +1,6 @@
 package com.example.smserver.api.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.example.smserver.api.service.MemberService;
 import com.example.smserver.converter.StudentTableConverter;
 import com.example.smserver.converter.TeacherTableConverter;
@@ -15,10 +16,14 @@ import com.example.smserver.vo.StudentTableVO;
 import com.example.smserver.vo.TeacherTableVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @description:
@@ -42,8 +47,9 @@ public class MemberServiceImpl implements MemberService {
         PageHelper.startPage(dto.getPage(), dto.getSize());
         List<Teacher> teacherList = teacherService.list();
         List<TeacherTableVO> resList = TeacherTableConverter.INSTANCE.toDataList(teacherList);
+        Map<Long, User> userMap = getMap(teacherList, Teacher::getUserId);
         resList.forEach(item -> {
-            User user = userService.getById(item.getUserId());
+            User user = userMap.get(item.getUserId());
             item.setName(user.getName());
             item.setPhone(user.getPhone());
             item.setSex(user.getSex());
@@ -58,12 +64,21 @@ public class MemberServiceImpl implements MemberService {
     public List<StudentTableVO> getstuPage() {
         List<Student> studentList = studentService.list();
         List<StudentTableVO> resList = StudentTableConverter.INSTANCE.toDataList(studentList);
+        Map<Long, User> userMap = getMap(studentList, Student::getUserId);
         resList.forEach(item -> {
-            User user = userService.getById(item.getUserId());
+            User user = userMap.get(item.getUserId());
             item.setName(user.getName());
-            item.setPhone(user.getPhone());
             item.setSex(user.getSex());
+            item.setPhone(user.getPhone());
+
         });
         return resList;
     }
+
+    private <E extends Serializable> Map<Long, User> getMap(List<E> list, SFunction<E, Long> sFunction ){
+        List<Long> idList = list.stream().map(sFunction).collect(Collectors.toList());
+        return  userService.simpleKeyMap(userService.lambdaWrapper().in(CollectionUtils.isNotEmpty(idList),
+                User::getId, idList), User::getId);
+    }
+
 }
