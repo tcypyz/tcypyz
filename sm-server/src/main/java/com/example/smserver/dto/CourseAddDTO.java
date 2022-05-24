@@ -6,11 +6,13 @@ import lombok.ToString;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+/**
+ * @author wlt
+ */
 @Data
-@ToString
 public class CourseAddDTO {
     private String className;
-    private long openUserId;
+    private Long openUserId;
     private Integer status;
     private String academic;
     private LocalDateTime createTime;

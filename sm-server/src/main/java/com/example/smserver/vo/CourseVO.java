@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseVO implements Serializable {

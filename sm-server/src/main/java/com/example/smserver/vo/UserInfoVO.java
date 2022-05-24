@@ -11,7 +11,6 @@ import java.io.Serializable;
  * @time: 2022/5/19
  */
 @Data
-@ToString
 public class UserInfoVO implements Serializable {
     private String college;
     private String profession;

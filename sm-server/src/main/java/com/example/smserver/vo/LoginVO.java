@@ -13,7 +13,6 @@ import java.io.Serializable;
  * @time: 2022/3/28
  */
 @Data
-@ToString
 @Builder
 @AllArgsConstructor
 public class LoginVO implements Serializable {

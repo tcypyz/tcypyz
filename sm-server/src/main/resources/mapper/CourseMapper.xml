@@ -26,10 +26,5 @@
                 #{CourseDTO.endTime}, #{CourseDTO.countNum},#{CourseDTO.openUserId})
     </insert>
 
-    <delete id="deleteCourseTeacher">
-        delete
-        from sms_course
-        where id = #{courseId}
-    </delete>
 
 </mapper>

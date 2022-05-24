@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
  */
 
 @Data
-@ToString
 public class StudentTableVO implements Serializable {
     private Long userId;
     private String name;

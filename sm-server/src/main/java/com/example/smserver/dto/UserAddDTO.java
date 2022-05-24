@@ -1,7 +1,6 @@
 package com.example.smserver.dto;
 
 import lombok.Data;
-import lombok.ToString;
 
 import java.util.Date;
 
@@ -11,7 +10,6 @@ import java.util.Date;
  * @time: 2022/4/16
  */
 @Data
-@ToString
 public class UserAddDTO {
     private String no;
     private String name;

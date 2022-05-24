@@ -13,7 +13,6 @@ import java.util.List;
  */
 @EqualsAndHashCode()
 @Data
-@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

@@ -11,7 +11,6 @@ import lombok.ToString;
  * @time: 2022/3/14
  */
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Result <T>{

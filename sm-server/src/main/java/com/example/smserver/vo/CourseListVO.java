@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
  * @time: 2022/5/14
  */
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseListVO implements Serializable {

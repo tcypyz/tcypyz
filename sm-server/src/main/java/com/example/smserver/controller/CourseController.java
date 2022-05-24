@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author wlt
+ */
 @RestController
 @RequestMapping("/course")
 public class CourseController extends BaseController {
@@ -31,10 +34,5 @@ public class CourseController extends BaseController {
         return ResultFactory.buildSuccessResult();
     }
 
-    @PostMapping("/teacherDeleteClass")
-    public Result<String> deleteCourseTeacher(Long courseId) {
-        apiCourseService.deleteCourseTeacher(courseId);
-        return ResultFactory.buildSuccessResult();
-    }
 
 }

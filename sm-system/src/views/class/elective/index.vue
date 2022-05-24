@@ -1,32 +1,35 @@
 <template>
   <div class="course-sel">
-    <div class="course-tab">
-      <div class="tab-item current">我学的课</div>
-    </div>
-    <div>
-      <ul class="course-list">
-        <li class="course" v-for="(course, index) in courseList" :key="index">
-          <a-card hoverable style="width: 270px">
-            <template #cover>
-              <img
-                alt="FAILED TO LOAD PICTURE"
-                src="../../../assets/course.jpg"
-              />
-            </template>
-            <a-card-meta>
-              <template #title>
-                {{ course.className }}
+    <a-card>
+      <div class="course-tab">
+        <div class="tab-item current">我学的课</div>
+      </div>
+      <div>
+        <ul class="course-list">
+          <a-empty v-if="courseList.length === 0"></a-empty>
+          <li class="course" v-for="(course, index) in courseList" :key="index">
+            <a-card hoverable style="width: 270px">
+              <template #cover>
+                <img
+                  alt="FAILED TO LOAD PICTURE"
+                  src="../../../assets/course.jpg"
+                />
               </template>
-              <template #description>
-                <p>{{ course.academic }}</p>
-                <p>{{ course.teacher }}</p>
-                <p>开课时间：{{ course.createTime }}-{{ course.endTime }}</p>
-              </template>
-            </a-card-meta>
-          </a-card>
-        </li>
-      </ul>
-    </div>
+              <a-card-meta>
+                <template #title>
+                  {{ course.className }}
+                </template>
+                <template #description>
+                  <p>{{ course.academic }}</p>
+                  <p>{{ course.teacher }}</p>
+                  <p>开课时间：{{ course.createTime }}-{{ course.endTime }}</p>
+                </template>
+              </a-card-meta>
+            </a-card>
+          </li>
+        </ul>
+      </div>
+    </a-card>
   </div>
 </template>
 
@@ -37,15 +40,7 @@ import { selCourse } from '@/api/select-class';
 export default defineComponent({
   name: 'SelCourse',
   setup() {
-    const courseList = ref([
-      {
-        className: '',
-        academic: '',
-        teacherName: '',
-        createTime: '',
-        endTime: '',
-      },
-    ]);
+    const courseList = ref([]);
     const handleSelCourse = () => {
       selCourse().then((res) => {
         courseList.value = res;

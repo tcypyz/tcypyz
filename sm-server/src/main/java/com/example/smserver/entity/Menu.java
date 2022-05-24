@@ -3,7 +3,7 @@ package com.example.smserver.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.ToString;
+
 
 import java.io.Serializable;
 
@@ -13,7 +13,6 @@ import java.io.Serializable;
  * @time: 2022/4/4
  */
 @Data
-@ToString
 @TableName("sms_menu")
 public class Menu implements Serializable {
     @TableId

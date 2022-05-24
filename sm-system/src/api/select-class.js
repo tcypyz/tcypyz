@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 const API = {
-  selCourse: '/course/studentSelected',
+  selCourse: '/selectCourse/studentSelected',
 };
 
 export function selCourse() {

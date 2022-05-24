@@ -13,7 +13,6 @@ import java.io.Serializable;
  * @time: 2022/3/28
  */
 @Data
-@ToString
 @TableName("sms_role")
 public class Role implements Serializable {
     @TableId

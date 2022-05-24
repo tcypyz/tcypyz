@@ -9,8 +9,10 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * @author wlt
+ */
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class SelectClassVO implements Serializable {

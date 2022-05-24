@@ -11,8 +11,6 @@ public interface ApiCourseService {
 
     void addCourseTeacher(CourseDTO courseDTO);
 
-    void deleteCourseTeacher(Long courseId);
-
     void updateCourseTeacher(CourseDTO courseDTO);
 
 }

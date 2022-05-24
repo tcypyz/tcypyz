@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
  * @time: 2022/4/28
  */
 @Data
-@ToString
 public class UserEditDTO {
     private Long id;
     private String name;

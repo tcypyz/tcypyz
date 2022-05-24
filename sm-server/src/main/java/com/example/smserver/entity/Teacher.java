@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
  * @time: 2022/4/7
  */
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("sms_teacher")

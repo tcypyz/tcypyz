@@ -1,7 +1,6 @@
 package com.example.smserver.dto;
 
 import lombok.Data;
-import lombok.ToString;
 
 /**
  * @description:
@@ -9,7 +8,6 @@ import lombok.ToString;
  * @time: 2022/5/21
  */
 @Data
-@ToString
 public class PasswordDTO {
     private String pass;
 }

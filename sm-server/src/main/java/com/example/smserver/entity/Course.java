@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
  * @time: 2022/4/12
  */
 @Data
-@ToString
 @TableName("sms_course")
 public class Course implements Serializable {
     @TableId

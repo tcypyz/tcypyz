@@ -1,7 +1,6 @@
 package com.example.smserver.dto;
 
 import lombok.Data;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +8,6 @@ import java.time.LocalDateTime;
  * @author wlt
  */
 @Data
-@ToString
 public class CourseDTO {
 
     private Long id;

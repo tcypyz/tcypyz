@@ -10,7 +10,7 @@
 
 <script>
 import { defineComponent, onMounted, reactive } from 'vue';
-import { TqueryCourse } from '@/api/Tquery-class';
+import { tQueryCourse } from '@/api/t-query-class';
 import { TABLE_COLUMS } from './data';
 
 export default defineComponent({
@@ -23,7 +23,7 @@ export default defineComponent({
     const columns = TABLE_COLUMS;
 
     const initList = () => {
-      TqueryCourse().then((res) => {
+      tQueryCourse().then((res) => {
         data.list = res;
       });
     };

@@ -35,18 +35,11 @@ public interface CourseMapper extends BaseMapper<Course> {
     int addCourseTeacher(@Param("CourseDTO") CourseDTO courseDTO);
 
     /**
-     * 删除课程-老师
-     *
-     * @param courseId 课程id
-     * @return int
-     */
-    int deleteCourseTeacher(@Param("courseId") Long courseId);
-
-    /**
      * 更新课程-老师
      *
      * @param courseDTO 课程dto
      * @return int
      */
     int updateCourseTeacher(@Param("CourseDTO") CourseDTO courseDTO);
+
 }

@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
  * @time: 2022/4/22
  */
 @Data
-@ToString
 public class TeacherTableVO implements Serializable {
     private Long userId;
     private String name;

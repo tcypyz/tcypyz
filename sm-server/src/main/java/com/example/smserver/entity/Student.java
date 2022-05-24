@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
  * @time: 2022/4/7
  */
 @Data
-@ToString
 @TableName("sms_student")
 public class Student implements Serializable {
     @TableId

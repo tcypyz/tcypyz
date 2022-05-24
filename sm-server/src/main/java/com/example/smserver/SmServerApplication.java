@@ -19,7 +19,7 @@ public class SmServerApplication {
     public static void main(String[] args) {
         try {
             SpringApplication.run(SmServerApplication.class, args);
-            log.info("http://localhost:{}/swagger-ui/index.html","8080");
+            log.info("Swagger ui文档地址： http://localhost:{}/swagger-ui/index.html","8080");
         } catch (Exception e) {
             e.printStackTrace();
         }

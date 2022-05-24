@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
  * @time: 2022/4/12
  */
 @Data
-@ToString
 public class UserTableVO implements Serializable {
     private Long id;
     private String name;

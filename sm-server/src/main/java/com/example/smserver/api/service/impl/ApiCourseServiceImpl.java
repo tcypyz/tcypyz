@@ -15,7 +15,11 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * @author wlt
+ */
 @Service
 public class ApiCourseServiceImpl implements ApiCourseService {
 
@@ -40,20 +44,9 @@ public class ApiCourseServiceImpl implements ApiCourseService {
 
     @Override
     public void addCourseTeacher(CourseDTO courseDTO) {
-        if (courseDTO.getCreateTime() == null) {
-            courseDTO.setCreateTime(LocalDateTime.now());
-        }
         courseService.getBaseMapper().addCourseTeacher(courseDTO);
     }
 
-    @Override
-    public void deleteCourseTeacher(Long courseId) {
-        Course course = courseService.lambdaQuery()
-                .eq(Course::getId, courseId).getEntity();
-        if(!ObjectUtils.isEmpty(course)) {
-            courseService.getBaseMapper().deleteCourseTeacher(courseId);
-        }
-    }
 
     @Override
     public void updateCourseTeacher(CourseDTO courseDTO) {

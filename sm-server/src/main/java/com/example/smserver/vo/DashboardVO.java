@@ -13,7 +13,6 @@ import java.util.List;
  * @time: 2022/5/14
  */
 @Data
-@ToString
 @AllArgsConstructor
 @Builder
 public class DashboardVO implements Serializable {

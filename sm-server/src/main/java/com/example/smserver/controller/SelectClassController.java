@@ -17,28 +17,26 @@ import java.util.List;
 @RequestMapping("/selectCourse")
 public class SelectClassController extends BaseController {
 
-    @Autowired
-    private ApiSelectClassService selectClassService;
 
     @Autowired
     private ApiSelectClassService apiSelectClassService;
 
     @PostMapping("/studentAddCourse")
     public Result<Integer> addCourseStudent(Long courseId, Long studentId) {
-        selectClassService.addCourseStudent(courseId, studentId);
+        apiSelectClassService.addCourseStudent(courseId, studentId);
         return ResultFactory.buildSuccessResult(1);
     }
 
     @PostMapping("/studentDeleteCourse")
     public Result<Integer> deleteCourseStudent(Long courseId, Long studentId) {
-        selectClassService.deleteCourseStudent(courseId, studentId);
+        apiSelectClassService.deleteCourseStudent(courseId, studentId);
         return ResultFactory.buildSuccessResult(1);
     }
 
     @GetMapping("/studentSelected")
     public Result<List<SelectClassVO>> selectCourseStudent() {
         Long id = getUserId();
-        List<SelectClassVO> selectClassVOS = apiSelectClassService.selectCourseStudent(id);
-        return ResultFactory.buildSuccessResult(selectClassVOS);
+        List<SelectClassVO> selectClassVoS = apiSelectClassService.selectCourseStudent(id);
+        return ResultFactory.buildSuccessResult(selectClassVoS);
     }
 }
