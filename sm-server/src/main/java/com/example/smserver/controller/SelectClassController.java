@@ -33,7 +33,7 @@ public class SelectClassController extends BaseController {
 
     @GetMapping(value = "/enable/schedule")
     public Result<List<EnableScheduleVO>> getSchedule() {
-        List<EnableScheduleVO> res = apiSelectClassService.getEnableSchedule(2L);
+        List<EnableScheduleVO> res = apiSelectClassService.getEnableSchedule(getUserId());
         return ResultFactory.buildSuccessResult(res);
     }
 

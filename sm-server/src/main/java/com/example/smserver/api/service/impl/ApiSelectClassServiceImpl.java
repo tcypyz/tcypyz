@@ -50,28 +50,40 @@ public class ApiSelectClassServiceImpl implements ApiSelectClassService {
         if(CollectionUtils.isEmpty(courseIdList)){
             return new ArrayList<>();
         }
-        List<Course> courseList = courseService.lambdaQuery().in(Course::getId, courseIdList).list();
-        List<Long> userIdList = courseList.stream().map(Course::getOpenUserId).collect(Collectors.toList());
+        List<Course> courseList = courseService.lambdaQuery()
+                .in(Course::getId, courseIdList)
+                .list();
+        List<Long> userIdList = courseList.stream()
+                .map(Course::getOpenUserId)
+                .collect(Collectors.toList());
         List<SelectClassVO> selectClassVOList = SelectClassVoConverter.INSTANCE.toDataList(courseList);
-        Map<Long, String> userMap = userService.simpleMap(lambdaWrapper(User.class).in(CollectionUtils.isNotEmpty(userIdList),
-                User::getId, userIdList), User::getId, User::getName);
+        Map<Long, String> userMap = userService.simpleMap(lambdaWrapper(User.class)
+                        .in(CollectionUtils.isNotEmpty(userIdList), User::getId, userIdList),
+                User::getId, User::getName);
         selectClassVOList.forEach(item -> item.setTeacherName(userMap.get(item.getOpenUserId())));
         return selectClassVOList;
     }
 
     @Override
     public List<EnableScheduleVO> getEnableSchedule(Long studentId) {
-        List<Long> classIdList = selectClassService.simpleList(lambdaWrapper(SelectClass.class).eq(SelectClass::getStudentId, studentId),
+        List<Long> classIdList = selectClassService.simpleList(lambdaWrapper(SelectClass.class)
+                        .eq(SelectClass::getStudentId, studentId),
                 SelectClass::getClassId);
-        List<Course> courseList = courseService.lambdaQuery().notIn(CollectionUtils.isNotEmpty(classIdList), Course::getId, classIdList).list();
-        List<Long> teacherIds = courseList.stream().map(Course::getOpenUserId).collect(Collectors.toList());
-        Map<Long, String> userMap = userService.simpleMap(lambdaWrapper(User.class).in(CollectionUtils.isNotEmpty(teacherIds),
-                User::getId, teacherIds), User::getId, User::getName);
+        List<Course> courseList = courseService.lambdaQuery()
+                .notIn(CollectionUtils.isNotEmpty(classIdList), Course::getId, classIdList)
+                .list();
+        List<Long> teacherIds = courseList.stream()
+                .map(Course::getOpenUserId)
+                .collect(Collectors.toList());
+        Map<Long, String> userMap = userService.simpleMap(lambdaWrapper(User.class)
+                        .in(CollectionUtils.isNotEmpty(teacherIds), User::getId, teacherIds),
+                User::getId, User::getName);
         List<EnableScheduleVO> resList = EnableScheduleConverter.INSTANCE.toDataList(courseList);
         resList.forEach(item -> {
             item.setTeacher(userMap.get(item.getOpenUserId()));
             item.setTime(item.getCreateTime().format(DateTimeFormatter.ofPattern(DateContexts.DATE_FORMAT))
-                    + " - " + item.getEndTime().format(DateTimeFormatter.ofPattern(DateContexts.DATE_FORMAT)));
+                    + " - "
+                    + item.getEndTime().format(DateTimeFormatter.ofPattern(DateContexts.DATE_FORMAT)));
         });
         return resList;
     }
