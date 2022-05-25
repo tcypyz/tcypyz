@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.*;
 import springfox.documentation.oas.annotations.EnableOpenApi;
-import springfox.documentation.schema.ModelRef;
 import springfox.documentation.schema.ScalarType;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;

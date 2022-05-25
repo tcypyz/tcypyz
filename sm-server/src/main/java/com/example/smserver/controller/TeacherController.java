@@ -2,7 +2,7 @@ package com.example.smserver.controller;
 
 import com.example.smserver.api.service.MemberService;
 import com.example.smserver.core.base.BaseController;
-import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.core.base.entity.BaseDTO;
 import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultFactory;
 import com.example.smserver.vo.TeacherTableVO;

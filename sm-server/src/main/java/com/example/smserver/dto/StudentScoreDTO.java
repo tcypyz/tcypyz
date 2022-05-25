@@ -1,6 +1,6 @@
 package com.example.smserver.dto;
 
-import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.core.base.entity.BaseDTO;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

@@ -3,7 +3,7 @@ package com.example.smserver.controller;
 import com.example.smserver.api.service.AccountService;
 import com.example.smserver.core.CustomException;
 import com.example.smserver.core.base.BaseController;
-import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.core.base.entity.BaseDTO;
 import com.example.smserver.core.context.LoginContexts;
 import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultCode;

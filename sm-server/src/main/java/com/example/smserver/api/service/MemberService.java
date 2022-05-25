@@ -1,6 +1,6 @@
 package com.example.smserver.api.service;
 
-import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.core.base.entity.BaseDTO;
 import com.example.smserver.vo.StudentTableVO;
 import com.example.smserver.vo.TeacherTableVO;
 import com.github.pagehelper.PageInfo;

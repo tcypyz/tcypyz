@@ -1,7 +1,6 @@
 package com.example.smserver.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.smserver.core.base.BaseService;
+import com.example.smserver.core.base.entity.BaseEntityService;
 import com.example.smserver.entity.Student;
 import com.example.smserver.mapper.StudentMapper;
 
@@ -10,5 +9,5 @@ import com.example.smserver.mapper.StudentMapper;
  * @author: zhh
  * @time: 2022/4/7
  */
-public interface StudentService extends BaseService<StudentMapper,Student> {
+public interface StudentService extends BaseEntityService<StudentMapper,Student> {
 }

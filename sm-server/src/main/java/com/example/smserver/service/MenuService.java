@@ -1,6 +1,6 @@
 package com.example.smserver.service;
 
-import com.example.smserver.core.base.BaseService;
+import com.example.smserver.core.base.entity.BaseEntityService;
 import com.example.smserver.entity.Menu;
 import com.example.smserver.mapper.MenuMapper;
 
@@ -9,5 +9,5 @@ import com.example.smserver.mapper.MenuMapper;
  * @author: zhh
  * @time: 2022/4/4
  */
-public interface MenuService extends BaseService<MenuMapper,Menu> {
+public interface MenuService extends BaseEntityService<MenuMapper,Menu> {
 }

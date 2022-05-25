@@ -77,7 +77,7 @@ public class TokenUtils {
         System.out.println(EQUALS);
         System.out.println("认证通过：");
         System.out.println("account:" + jwt.getClaim("account").asString());
-        System.out.println("过期时间:" + jwt.getExpiresAt().toLocaleString());
+        System.out.println("过期时间:" + jwt.getExpiresAt().toString());
         System.out.println(EQUALS);
         return true;
     }

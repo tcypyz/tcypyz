@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 /**
  * @description:
  * @author: zhh
@@ -13,7 +15,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Result <T>{
+public class Result <T> implements Serializable {
     private Integer code;
     private String msg;
     private T data;

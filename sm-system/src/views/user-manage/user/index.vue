@@ -217,14 +217,10 @@ export default defineComponent({
     const handle = reactive({
       selectColor(id) {
         switch (id) {
-          case RoleEnum.ADMIN:
-            return 'red';
-          case RoleEnum.TEACHER:
-            return 'green';
-          case RoleEnum.STUDENT:
-            return 'blue';
-          default:
-            return 'blue';
+          case RoleEnum.ADMIN: return 'red';
+          case RoleEnum.TEACHER: return 'green';
+          case RoleEnum.STUDENT: return 'blue';
+          default: return 'blue';
         }
       },
       selectedRowKeys: [],

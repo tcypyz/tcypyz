@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import com.example.smserver.api.service.MemberService;
 import com.example.smserver.converter.StudentTableConverter;
 import com.example.smserver.converter.TeacherTableConverter;
-import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.core.base.entity.BaseDTO;
 import com.example.smserver.entity.Student;
 import com.example.smserver.entity.Teacher;
 import com.example.smserver.entity.User;
@@ -77,8 +77,7 @@ public class MemberServiceImpl implements MemberService {
 
     private <E extends Serializable> Map<Long, User> getMap(List<E> list, SFunction<E, Long> sFunction ){
         List<Long> idList = list.stream().map(sFunction).collect(Collectors.toList());
-        return  userService.simpleKeyMap(userService.lambdaWrapper().in(CollectionUtils.isNotEmpty(idList),
-                User::getId, idList), User::getId);
+        return  userService.simpleKeyMap(userService.lambdaWrapper().in(CollectionUtils.isNotEmpty(idList), User::getId, idList), User::getId);
     }
 
 }

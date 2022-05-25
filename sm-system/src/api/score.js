@@ -1,7 +1,7 @@
 import request from '@/utils/request';
 
 const API = {
-  query: '',
+  query: '/score/student/query',
 };
 
 export function queryStudent(data) {

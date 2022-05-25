@@ -2,7 +2,7 @@ package com.example.smserver.converter;
 
 import com.example.smserver.core.base.Converter;
 import com.example.smserver.entity.Course;
-import com.example.smserver.vo.CourseListVO;
+import com.example.smserver.vo.EnableScheduleVO;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
@@ -12,32 +12,32 @@ import java.util.List;
 /**
  * @description:
  * @author: zhh
- * @time: 2022/5/14
+ * @time: 2022/5/25
  */
 @org.mapstruct.Mapper
-public interface CourseListVoConverter extends Converter<Course, CourseListVO> {
+public interface EnableScheduleConverter extends Converter<Course, EnableScheduleVO> {
 
-    CourseListVoConverter INSTANCE = Mappers.getMapper(CourseListVoConverter.class);
+    EnableScheduleConverter INSTANCE = Mappers.getMapper(EnableScheduleConverter.class);
 
     /**
      * 数据
      *
      * @param course 课程
-     * @return {@link CourseListVO}
+     * @return {@link EnableScheduleVO}
      */
     @Mapping(target = "name", source = "className")
     @Override
-    CourseListVO toData(Course course);
+    EnableScheduleVO toData(Course course);
 
     /**
-     * 数据列表
+     * 重写
      *
      * @param courses 课程
-     * @return {@link List}<{@link CourseListVO}>
+     * @return {@link List}<{@link EnableScheduleVO}>
      */
     @Override
     @Mappings({
-            @Mapping(target = "className", source = "name")
+        @Mapping(target = "name", source = "className")
     })
-    List<CourseListVO> toDataList(List<Course> courses);
+    List<EnableScheduleVO> toDataList(List<Course> courses);
 }

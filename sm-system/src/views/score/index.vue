@@ -39,6 +39,7 @@
         :columns="columns"
         :data-source="data.list"
         :pagination="false"
+        :loading="loading"
       >
       </a-table>
     </a-card>
@@ -50,7 +51,6 @@ import { defineComponent, onMounted, reactive, ref, toRefs } from 'vue';
 import { ReloadOutlined } from '@ant-design/icons-vue';
 import { queryStudent } from '@/api/score';
 import { TABLE_COLUMS } from './data';
-import { on } from 'events';
 
 export default defineComponent({
   name: 'Score',
@@ -69,7 +69,7 @@ export default defineComponent({
     });
     const handleQuery = (params) => {
       loading.value = true;
-      queryStudent().then((res) => {
+      queryStudent(params).then((res) => {
         data.list = res;
       }).finally(() => {
         loading.value = false;
@@ -83,17 +83,18 @@ export default defineComponent({
       handleQuery({ ...formState });
     };
     onMounted(() => {
-
+      handleQuery({ ...formState });
     });
     return {
       formRef,
       formState,
       onFinish,
       labelCol: { style: { width: '70px' } },
-      wrapperCol: { style: { width: '270px' } },
+      wrapperCol: { style: { width: 'auto' } },
       handleReload,
       data,
       ...toRefs(state),
+      loading,
     };
   },
 });

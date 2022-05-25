@@ -5,7 +5,7 @@ import com.example.smserver.api.service.AccountService;
 import com.example.smserver.converter.UserEditConverter;
 import com.example.smserver.converter.UserTableConverter;
 import com.example.smserver.core.CustomException;
-import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.core.base.entity.BaseDTO;
 import com.example.smserver.core.context.DigitalContexts;
 import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;

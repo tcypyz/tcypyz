@@ -4,6 +4,7 @@ import com.example.smserver.api.service.ApiSelectClassService;
 import com.example.smserver.core.base.BaseController;
 import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultFactory;
+import com.example.smserver.vo.EnableScheduleVO;
 import com.example.smserver.vo.SelectClassVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author wlt
+ */
 @RestController
-@RequestMapping("/selectCourse")
+@RequestMapping("/select/course")
 public class SelectClassController extends BaseController {
 
 
@@ -22,15 +26,15 @@ public class SelectClassController extends BaseController {
     private ApiSelectClassService apiSelectClassService;
 
     @PostMapping("/studentAddCourse")
-    public Result<Integer> addCourseStudent(Long courseId, Long studentId) {
+    public Result<String> addCourseStudent(Long courseId, Long studentId) {
         apiSelectClassService.addCourseStudent(courseId, studentId);
-        return ResultFactory.buildSuccessResult(1);
+        return ResultFactory.buildSuccessResult();
     }
 
-    @PostMapping("/studentDeleteCourse")
-    public Result<Integer> deleteCourseStudent(Long courseId, Long studentId) {
-        apiSelectClassService.deleteCourseStudent(courseId, studentId);
-        return ResultFactory.buildSuccessResult(1);
+    @GetMapping(value = "/enable/schedule")
+    public Result<List<EnableScheduleVO>> getSchedule() {
+        List<EnableScheduleVO> res = apiSelectClassService.getEnableSchedule(2L);
+        return ResultFactory.buildSuccessResult(res);
     }
 
     @GetMapping("/studentSelected")

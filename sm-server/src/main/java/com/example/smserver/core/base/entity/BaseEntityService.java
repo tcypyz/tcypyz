@@ -1,4 +1,4 @@
-package com.example.smserver.core.base;
+package com.example.smserver.core.base.entity;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -8,14 +8,13 @@ import com.baomidou.mybatisplus.extension.toolkit.SimpleQuery;
 
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * @description:
  * @author: zhh
  * @time: 2022/4/28
  */
-public interface BaseService<M extends BaseMapper<T>, T> extends IService<T> {
+public interface BaseEntityService<M extends BaseMapper<T>, T> extends IService<T>, BaseService {
 
     /**
      * 获取baseMapper

@@ -1,7 +1,6 @@
 package com.example.smserver.service;
 
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.smserver.core.base.BaseService;
+import com.example.smserver.core.base.entity.BaseEntityService;
 import com.example.smserver.entity.Role;
 import com.example.smserver.mapper.RoleMapper;
 
@@ -10,5 +9,5 @@ import com.example.smserver.mapper.RoleMapper;
  * @author: zhh
  * @time: 2022/3/28
  */
-public interface RoleService extends BaseService<RoleMapper,Role> {
+public interface RoleService extends BaseEntityService<RoleMapper,Role> {
 }

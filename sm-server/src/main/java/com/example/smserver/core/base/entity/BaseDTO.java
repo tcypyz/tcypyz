@@ -1,4 +1,4 @@
-package com.example.smserver.core.base;
+package com.example.smserver.core.base.entity;
 
 import com.example.smserver.core.context.DigitalContexts;
 import lombok.Data;

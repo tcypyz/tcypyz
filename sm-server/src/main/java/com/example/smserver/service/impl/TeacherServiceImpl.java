@@ -1,6 +1,6 @@
 package com.example.smserver.service.impl;
 
-import com.example.smserver.core.base.BaseServiceImpl;
+import com.example.smserver.core.base.entity.BaseEntityServiceImpl;
 import com.example.smserver.entity.Teacher;
 import com.example.smserver.mapper.TeacherMapper;
 import com.example.smserver.service.TeacherService;
@@ -12,6 +12,6 @@ import org.springframework.stereotype.Service;
  * @time: 2022/4/7
  */
 @Service
-public class TeacherServiceImpl extends BaseServiceImpl<TeacherMapper, Teacher> implements TeacherService {
+public class TeacherServiceImpl extends BaseEntityServiceImpl<TeacherMapper, Teacher> implements TeacherService {
 
 }

@@ -1,6 +1,7 @@
 package com.example.smserver.api.service;
 
-import com.example.smserver.core.base.BaseDTO;
+import com.example.smserver.core.base.entity.BaseDTO;
+import com.example.smserver.core.base.entity.BaseService;
 import com.example.smserver.dto.IdDTO;
 import com.example.smserver.dto.UserAddDTO;
 import com.example.smserver.dto.UserEditDTO;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author: zhh
  * @time: 2022/4/28
  */
-public interface AccountService {
+public interface AccountService extends BaseService {
 
     /**
      * 菜单列表
