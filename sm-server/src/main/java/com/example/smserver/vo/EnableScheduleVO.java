@@ -15,5 +15,6 @@ import java.io.Serializable;
 public class EnableScheduleVO extends CourseListVO implements Serializable {
     private String time;
     private Integer status;
+    private Long id;
 
 }

@@ -30,6 +30,6 @@ public class ScoreController extends BaseController {
 
     @PostMapping("/student/query")
     public Result<List<ScoreTableVO>> queryStudent(@RequestBody StudentScoreDTO dto){
-        return ResultFactory.buildSuccessResult(scoreInfoService.queryStudent(dto, 2L));
+        return ResultFactory.buildSuccessResult(scoreInfoService.queryStudent(dto, getUserId()));
     }
 }

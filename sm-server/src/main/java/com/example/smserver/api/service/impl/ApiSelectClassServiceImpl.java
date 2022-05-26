@@ -4,6 +4,7 @@ import com.example.smserver.api.service.ApiSelectClassService;
 import com.example.smserver.converter.EnableScheduleConverter;
 import com.example.smserver.converter.SelectClassVoConverter;
 import com.example.smserver.core.context.DateContexts;
+import com.example.smserver.dto.IdDTO;
 import com.example.smserver.entity.Course;
 import com.example.smserver.entity.SelectClass;
 import com.example.smserver.entity.User;
@@ -15,6 +16,7 @@ import com.example.smserver.vo.SelectClassVO;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -39,8 +41,9 @@ public class ApiSelectClassServiceImpl implements ApiSelectClassService {
     private UserService userService;
 
     @Override
-    public void addCourseStudent(Long courseId, Long studentId) {
-        selectClassService.getBaseMapper().addCourseStudent(courseId, studentId);
+    @Transactional(rollbackFor = Exception.class)
+    public void addSelect(IdDTO dto) {
+
     }
 
     @Override

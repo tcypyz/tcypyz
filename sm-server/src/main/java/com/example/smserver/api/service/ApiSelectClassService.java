@@ -1,6 +1,7 @@
 package com.example.smserver.api.service;
 
 import com.example.smserver.core.base.entity.BaseService;
+import com.example.smserver.dto.IdDTO;
 import com.example.smserver.vo.EnableScheduleVO;
 import com.example.smserver.vo.SelectClassVO;
 
@@ -12,12 +13,11 @@ import java.util.List;
 public interface ApiSelectClassService extends BaseService {
 
     /**
-     * 添加课程学生
+     * 添加课程
      *
-     * @param courseId  课程id
-     * @param studentId 学生证
+     * @param dto dto
      */
-    void addCourseStudent(Long courseId, Long studentId);
+    void addSelect(IdDTO dto);
 
 
     /**

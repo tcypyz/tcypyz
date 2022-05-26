@@ -6,24 +6,31 @@
         <a-step title="课程确认" />
         <a-step title="完成" />
       </a-steps>
-
-      <a-button style="margin-left: 8px" @click="prev">Previous</a-button>
       
       <div v-if="current === 0">
         <div class="table-bar">
           <div class="table-left">
-            <a-button class="next-btn" type="primary" @click="next">下一步</a-button>
+            <a-button 
+              class="next-btn" 
+              type="primary" 
+              @click="next"
+              :disabled="data.selectedRowKeys.length === 0"
+            >下一步</a-button>
           </div>
           <div class="table-right">
-            <ReloadOutlined @click="handleReload"/>
+            <ReloadOutlined @click="loadList"/>
           </div>
         </div>
         <a-table
-          :dataS-source="data.list"
+          :data-source="data.tableList"
           :columns="columns"
           :loading="loading"
           :pagination="false"
-          :row-selection="{selectedRowKeys: data.selectedRowKeys, onChange: onSelectChange}"
+          :row-selection="{
+            selectedRowKeys: data.selectedRowKeys, 
+            onChange: onSelectChange, 
+            getCheckboxProps: getCheckboxProps,
+          }"
         >
           <template #bodyCell="{ column, record }">
             <template v-if="column.key === 'status'">
@@ -32,6 +39,39 @@
           </template>
         </a-table>
       </div>
+      <div v-else-if="current === 1">
+        <a-typography-title  :level="2">课程确认</a-typography-title>
+        <a-divider></a-divider>
+         <a-list :grid="{ gutter: 16, column: 4 }" :data-source="data.list">
+          <template #renderItem="{ item }">
+            <a-list-item>
+              <a-card :title="item.name" hoverable>
+                {{ item.teacher }}<br/>
+                <a-typography-text type="secondary">{{ item.time}}</a-typography-text>
+              </a-card>
+            </a-list-item>
+          </template>
+         </a-list>
+
+        <a-button style="margin-left: 8px" @click="prev">返回</a-button>
+        <a-button 
+          class="next-btn" 
+          type="primary" 
+          @click="handleCommit"
+          :loading="btnLoading"
+        >确认</a-button>
+      </div>
+      <div v-else-if="current === 2">
+        <a-result
+          status="success"
+          title="恭喜你完成选课！"
+          sub-title="选课完成，你可以选择继续选课，或者退出系统。"
+        >
+          <template #extra>
+            <a-button key="console" type="primary" @click="handleFinish">继续选课</a-button>
+          </template>
+        </a-result>
+      </div>
     </a-card>
   </div>
 </template>
@@ -39,8 +79,10 @@
 <script>
 import { defineComponent, onMounted, reactive, ref } from 'vue';
 import { ReloadOutlined } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
 import { TABLE_COLUMNS } from './data';
 import { StatusEnum } from '@/type/enum';
+import { getEnableSchedule, addSelect } from '@/api/select-class';
 
 export default defineComponent({
   name: 'Select',
@@ -48,15 +90,36 @@ export default defineComponent({
   setup() {
     const current = ref(0);
     const loading = ref(false);
+    const btnLoading = ref(false);
     const data = reactive({
-      list: [],
+      tableList: [],
       selectedRowKeys: [],
+      list: [],
     });
+    const loadList = () => {
+      loading.value = true;
+      getEnableSchedule().then(res => {
+        data.tableList = res.map(element => { return { ...element, key: element.id }; });;
+      }).finally(() => {
+        loading.value = false;
+      });
+    };
     const next = () => {
       current.value++;
     };
     const prev = () => {
       current.value--;
+    };
+    const handleCommit = () => {
+      btnLoading.value = true;
+      addSelect({ idList: data.selectedRowKeys }).then(() => {
+        message.success('添加成功');
+        next();
+      }).catch(() => {
+        message.error('添加课程失败，请重试！');
+      }).finally(() => {
+        btnLoading.value = false;
+      });
     };
     const state = {
       columns: TABLE_COLUMNS,
@@ -71,10 +134,20 @@ export default defineComponent({
       StatusEnum,
       onSelectChange(selectedRowKeys) {
         data.selectedRowKeys = selectedRowKeys;
+        data.list = data.tableList.filter(item => data.selectedRowKeys.includes(item.key));
       },
+      getCheckboxProps: record => ({
+        disabled: record.status === StatusEnum.FINISH,
+      }),
+    };
+    const handleFinish = () => {
+      loadList();
+      data.list = [];
+      data.selectedRowKeys = [];
+      current.value = 0;
     };
     onMounted(() => {
-      
+      loadList();
     });
     return {
       current,
@@ -83,6 +156,10 @@ export default defineComponent({
       ...state,
       loading,
       data,
+      loadList,
+      handleCommit,
+      btnLoading,
+      handleFinish,
     };
   },
 });
