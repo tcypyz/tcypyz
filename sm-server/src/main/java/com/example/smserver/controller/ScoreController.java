@@ -6,6 +6,7 @@ import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultFactory;
 import com.example.smserver.dto.StudentScoreDTO;
 import com.example.smserver.vo.ScoreTableVO;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ public class ScoreController extends BaseController {
     private ScoreInfoService scoreInfoService;
 
     @PostMapping("/student/query")
+    @ApiOperation("成绩查询")
     public Result<List<ScoreTableVO>> queryStudent(@RequestBody StudentScoreDTO dto){
         return ResultFactory.buildSuccessResult(scoreInfoService.queryStudent(dto, getUserId()));
     }

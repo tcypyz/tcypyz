@@ -7,6 +7,7 @@ import com.example.smserver.core.result.Result;
 import com.example.smserver.core.result.ResultFactory;
 import com.example.smserver.vo.TeacherTableVO;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,7 @@ public class TeacherController extends BaseController {
     private MemberService memberService;
 
     @PostMapping(value = "/list")
+    @ApiOperation("教师列表")
     public Result<PageInfo<TeacherTableVO>> list(@RequestBody BaseDTO dto){
         PageInfo<TeacherTableVO> pageInfo = memberService.getPage(dto);
         return ResultFactory.buildSuccessResult(pageInfo);

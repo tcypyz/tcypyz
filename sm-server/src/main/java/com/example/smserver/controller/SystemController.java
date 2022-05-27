@@ -9,8 +9,10 @@ import com.example.smserver.dto.LoginDTO;
 import com.example.smserver.entity.User;
 import com.example.smserver.api.service.SystemService;
 import com.example.smserver.vo.LoginVO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,11 +29,14 @@ public class SystemController extends BaseController {
     private SystemService systemService;
 
     @RequestMapping("/filter/error")
+    @ApiOperation("异常接口")
+    @ApiIgnore
     public Result<String> handleError(){
         return ResultFactory.buildResult(ResultCode.UNAUTHORIZED, LoginContexts.TOKEN_ERROR);
     }
 
     @PostMapping("/login")
+    @ApiOperation("登录")
     public Result<LoginVO> login(@RequestBody LoginDTO dto, HttpServletResponse response) throws Exception {
         User user = systemService.userLogin(dto.getId(), dto.getPassword());
         String token = systemService.createToken(response, user.getId().toString());
@@ -44,6 +49,7 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/authentication")
+    @ApiOperation("验证登录")
     public Result<String> authentication(){
         try{
             systemService.authentication(getHeaderToken());
@@ -54,6 +60,7 @@ public class SystemController extends BaseController {
     }
 
     @GetMapping("/logout")
+    @ApiOperation("登出")
     public Result<String> logout(){
         try {
             systemService.logout(getHeaderToken());
